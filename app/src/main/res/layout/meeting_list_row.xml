@@ -1,7 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="125dp"
+    android:orientation="horizontal"
+    android:weightSum="100">
 
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:padding="8dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="18"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/meeting_row_date"
+        android:textSize="25dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_row_month"
+        android:layout_below="@+id/meeting_row_date"
+        android:text="Jan"
+        />
+</RelativeLayout>
+
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:id="@+id/meeting_row_status"
+        android:background="#000fff"/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="60"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="prof."
+        android:textSize="17dp"
+        android:id="@+id/meeting_row_name"
+        android:padding="8dp"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="about the meeting."
+        android:maxLines="2"
+        android:id="@+id/meeting_row_about"
+        android:padding="8dp"
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="time"
+        android:id="@+id/meeting_row_time"
+        android:padding="8dp"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>
 
 
 </LinearLayout>

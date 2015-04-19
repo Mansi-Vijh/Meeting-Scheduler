@@ -1,4 +1,7 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <color name="blue">#000fff</color>
+    <color name="black">#000000</color>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">

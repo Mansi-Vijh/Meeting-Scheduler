@@ -1,8 +1,9 @@
 package sheduler.meeting.iiitd.meetingsheduler.activity;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.ActionBarDrawerToggle;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -13,11 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
-import sheduler.meeting.iiitd.meetingsheduler.fragments.NavigationDrawerFragment;
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -25,9 +25,6 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
 
     @Override
@@ -49,9 +46,48 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
+
+
+        Fragment fragment =null;
+        switch (position) {
+
+            case 0: //Home
+                fragment = new HomeFragment();
+
+
+                break;
+            case 1: //Shedule Meeting
+                fragment = new HistoryFragment();
+
+
+                break;
+
+            case 2: //History
+                fragment = new HistoryFragment();
+
+
+                break;
+            case 3: //Profile
+                fragment = new HistoryFragment();
+
+
+                break;
+
+            case 4: //Settings
+                fragment = new HistoryFragment();
+
+
+                break;
+
+
+            default:
+                break;
+        }
+
+
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+                .replace(R.id.container, fragment).addToBackStack(fragment.getClass().getSimpleName()).commit();
+
     }
 
     public void onSectionAttached(int number) {
@@ -65,15 +101,21 @@ public class MainActivity extends ActionBarActivity
             case 3:
                 mTitle = getString(R.string.title_section3);
                 break;
+            case 4:
+                mTitle = getString(R.string.title_section4);
+                break;
+            case 5:
+                mTitle = getString(R.string.title_section5);
+                break;
         }
     }
-
+/*
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
-    }
+    }*/
 
 
     @Override
@@ -83,7 +125,7 @@ public class MainActivity extends ActionBarActivity
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
+        //    restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
