@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="sheduler.meeting.iiitd.meetingsheduler.activity.MeetingForm">
+
+    <TextView
+        android:text="Date / Time i.e. Slot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="15dp"
+        android:background="#3d87f5"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:id="@+id/meeting_form_slot"
+        android:gravity="center"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:paddingTop="45dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_form_title"
+        android:hint="Title"
+        android:paddingLeft="25dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@+id/meeting_form_slot"   />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:paddingTop="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_form_description"
+        android:hint="Description"
+        android:paddingLeft="25dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@+id/meeting_form_title"
+
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:paddingTop="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_form_Attachment"
+        android:hint="Click to add a link"
+        android:paddingLeft="25dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@+id/meeting_form_description"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:paddingTop="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_form_other_details"
+        android:hint="Any details to add"
+        android:paddingLeft="25dp"
+
+        android:lines="5"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@+id/meeting_form_Attachment"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_form_send_request"
+        android:text="Send Request"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:background="#ffffff"
+        android:layout_below="@+id/meeting_form_other_details"
+        android:layout_centerInParent="true"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:isScrollContainer="true"
+    tools:context="sheduler.meeting.iiitd.meetingsheduler.activity.MeetingDetailsActivity">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#3d87f5"
+    android:text="Meeting title"
+    android:gravity="center"
+    android:paddingTop="25dp"
+    android:paddingBottom="10dp"
+    android:textStyle="bold"
+    android:textSize="18sp"
+    android:textColor="#ffffff"
+
+    android:id="@+id/meeting_details_meeting_title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:paddingTop="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_details_to_or_from"
+        android:text="Attendant or attendees Name"
+        android:paddingLeft="15dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@+id/meeting_details_meeting_title"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:paddingTop="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_details_time"
+        android:text="Time"
+        android:paddingLeft="25dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@+id/meeting_details_to_or_from"   />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:paddingTop="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_details_description"
+        android:text="Description"
+        android:paddingLeft="25dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@+id/meeting_details_time"
+
+        />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:paddingTop="35dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_details_link"
+        android:text="Link"
+        android:linksClickable="true"
+        android:paddingLeft="25dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@+id/meeting_details_description"
+
+        />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:paddingTop="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/meeting_details_details"
+        android:text="Details "
+        android:linksClickable="true"
+        android:paddingLeft="25dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@+id/meeting_details_link"
+
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:id="@+id/meeting_details_ll_button"
+    android:layout_below="@+id/meeting_details_details"
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:weightSum="100">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/meeting_details_button1"
+        android:layout_weight="50"
+        android:background="#ffffff" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/meeting_details_button2"
+        android:layout_weight="50"
+        android:background="#ffffff"/>
+</LinearLayout>
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package sheduler.meeting.iiitd.meetingsheduler.activity.Adapters;
+package sheduler.meeting.iiitd.meetingsheduler.Adapters;
 
 
 
@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import sheduler.meeting.iiitd.meetingsheduler.R;
-import sheduler.meeting.iiitd.meetingsheduler.activity.PopulatingClass.ProfessorDetails;
+import sheduler.meeting.iiitd.meetingsheduler.PopulatingClass.ProfessorDetails;
 
 /**
  * Created by dell on 4/19/2015.

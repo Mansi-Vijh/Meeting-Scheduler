@@ -1,4 +1,4 @@
-package sheduler.meeting.iiitd.meetingsheduler.activity.PopulatingClass;
+package sheduler.meeting.iiitd.meetingsheduler.PopulatingClass;
 
 /**
  * Created by dell on 4/19/2015.
@@ -9,6 +9,27 @@ public class ProfessorDetails {
     private String about;
     private String time;
     private String date;
+
+    public ProfessorDetails(String profName, String about, String time, String date, String meetingId, String status, String month) {
+        this.profName = profName;
+        this.about = about;
+        this.time = time;
+        this.date = date;
+        //this.meetingId = meetingId;
+        this.meetingId = "123";
+        this.status = status;
+        this.month = month;
+    }
+
+    public String getMeetingId() {
+        return meetingId;
+    }
+
+    public void setMeetingId(String meetingId) {
+        this.meetingId = meetingId;
+    }
+
+    private String meetingId;
 
     public String getStatus() {
         return status;
@@ -25,6 +46,7 @@ public class ProfessorDetails {
         this.status=status;
         this.about = about;
         this.time = time;
+        this.meetingId = "123";
         this.date = date;
         this.month = month;
     }

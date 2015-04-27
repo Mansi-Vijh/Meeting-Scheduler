@@ -16,6 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.MeetingDetailsActivity"
+            android:label="@string/title_activity_meeting_details" >
+        </activity>
+        <activity
+            android:name=".activity.ScheduleMeeting"
+            android:label="@string/title_activity_shedule_meeting" >
+        </activity>
+        <activity
+            android:name=".activity.MeetingForm"
+            android:label="@string/title_activity_meeting_form" >
+        </activity>
     </application>
 
 </manifest>

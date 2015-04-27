@@ -1,6 +1,7 @@
 package sheduler.meeting.iiitd.meetingsheduler.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
@@ -13,8 +14,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import sheduler.meeting.iiitd.meetingsheduler.R;
-import sheduler.meeting.iiitd.meetingsheduler.activity.Adapters.ProfListViewRowAdapter;
-import sheduler.meeting.iiitd.meetingsheduler.activity.PopulatingClass.ProfessorDetails;
+import sheduler.meeting.iiitd.meetingsheduler.Adapters.ProfListViewRowAdapter;
+import sheduler.meeting.iiitd.meetingsheduler.PopulatingClass.ProfessorDetails;
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener{
 
@@ -86,6 +87,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        String meetingId=profPopulate.get(position).getMeetingId();
+        String status=profPopulate.get(position).getStatus();
+        Intent intent=new Intent(getActivity(), MeetingDetailsActivity.class);
+        intent.putExtra("meeting_id",meetingId);
+        intent.putExtra("status",status);
+        startActivity(intent);
 
     }
 }
