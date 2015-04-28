@@ -28,6 +28,10 @@
             android:name=".activity.MeetingForm"
             android:label="@string/title_activity_meeting_form" >
         </activity>
+        <activity
+            android:name=".activity.ProfessorListView"
+            android:label="@string/title_activity_professor_list_view" >
+        </activity>
     </application>
 
 </manifest>

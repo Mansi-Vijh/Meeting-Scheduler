@@ -57,7 +57,7 @@ public class MainActivity extends FragmentActivity
 
                 break;
             case 1: //Shedule Meeting
-                fragment = new HistoryFragment();
+                fragment = new ProfessorListView();
 
 
                 break;

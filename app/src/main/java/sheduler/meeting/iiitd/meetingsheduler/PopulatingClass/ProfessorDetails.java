@@ -10,6 +10,21 @@ public class ProfessorDetails {
     private String time;
     private String date;
 
+    public String getCourse() {
+        return course;
+    }
+
+    public ProfessorDetails(String profName, String course) {
+        this.profName = profName;
+        this.course = course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    private String course;
+
     public ProfessorDetails(String profName, String about, String time, String date, String meetingId, String status, String month) {
         this.profName = profName;
         this.about = about;
