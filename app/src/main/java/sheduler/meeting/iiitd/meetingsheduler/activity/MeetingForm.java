@@ -4,15 +4,35 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
-public class MeetingForm extends ActionBarActivity {
+public class MeetingForm extends ActionBarActivity implements View.OnClickListener {
+
+    EditText title, description, details, attachment;
+    Button sendRequest;
+    TextView slot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting_form);
+
+
+        title=(EditText )findViewById(R.id.meeting_form_title);
+        description=(EditText )findViewById(R.id.meeting_form_description);
+        details=(EditText )findViewById(R.id.meeting_form_other_details);
+        attachment=(EditText )findViewById(R.id.meeting_form_attachment);
+        sendRequest=(Button ) findViewById(R.id.meeting_form_send_request);
+        slot=(TextView) findViewById(R.id.meeting_form_slot);
+
+
+        sendRequest.setOnClickListener(this);
+
     }
 
     @Override
@@ -35,5 +55,22 @@ public class MeetingForm extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch(v.getId()){
+            case R.id.meeting_form_slot:
+
+                break;
+            case R.id.meeting_form_attachment:
+
+                break;
+
+
+        }
+
+
     }
 }

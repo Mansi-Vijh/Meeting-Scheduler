@@ -13,13 +13,20 @@ import sheduler.meeting.iiitd.meetingsheduler.R;
 
 public class MeetingDetailsActivity extends ActionBarActivity implements View.OnClickListener{
 
-    TextView name,time,attachmentLink, description, details;
+    TextView name,time,attachmentLink, description, details,title;
     Button button1, button2;
+
+
+    enum status{pending, approved, canceled, rejected};
+
+    status currentStatus=status.pending;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting_details);
 
+        title=(TextView) findViewById(R.id.meeting_details_meeting_title);
         name=(TextView) findViewById(R.id.meeting_details_to_or_from);
         time=(TextView) findViewById(R.id.meeting_details_time);
         attachmentLink=(TextView) findViewById(R.id.meeting_details_link);
@@ -29,7 +36,26 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
         button2=(Button) findViewById(R.id.meeting_details_button2);
 
         button1.setOnClickListener(this);
-        button2.setOnClickListener(this);
+        button2.setOnClickListener(this);/*
+        status testVariable= status.pending;
+        if(testVariable== status.pending){
+
+            System.out.println("pending checked. ");
+        }*/
+
+
+
+
+
+        title.setText("");
+        name.setText("");
+        time.setText("");
+        attachmentLink.setText("");
+        description.setText("");
+        details.setText("");
+        button1.setText("");
+        button2.setText("");
+
 
 
     }
@@ -61,6 +87,7 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
 
         switch(v.getId()){
             case R.id.meeting_details_button1:
+
 
             break;
 

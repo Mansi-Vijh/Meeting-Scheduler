@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:paddingTop="25dp"
         android:layout_height="wrap_content"
-        android:id="@+id/meeting_form_Attachment"
+        android:id="@+id/meeting_form_attachment"
         android:hint="Click to add a link"
         android:paddingLeft="25dp"
         android:fontFamily="sans-serif-condensed"
@@ -61,7 +61,7 @@
 
         android:lines="5"
         android:fontFamily="sans-serif-condensed"
-        android:layout_below="@+id/meeting_form_Attachment"
+        android:layout_below="@+id/meeting_form_attachment"
         />
 
     <Button
