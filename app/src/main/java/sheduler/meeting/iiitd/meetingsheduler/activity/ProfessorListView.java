@@ -32,6 +32,7 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
     ListView professorListView;
     ProfessorListViewAdaptor adapter;
     ArrayList<ProfessorDetails>  professorDetails =new ArrayList<ProfessorDetails>();
+    String proffId="";
 
 
     @Override
@@ -89,6 +90,10 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
+        Intent intent =new Intent(getActivity() , ScheduleMeeting.class);
+        intent.putExtra("proffessor_id",proffId);
+
+        startActivity(intent);
 
 
     }

@@ -1,5 +1,6 @@
 package sheduler.meeting.iiitd.meetingsheduler.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +22,8 @@ public class MeetingForm extends ActionBarActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting_form);
+
+        Intent intent;
 
 
         title=(EditText )findViewById(R.id.meeting_form_title);
@@ -60,17 +63,9 @@ public class MeetingForm extends ActionBarActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
-        switch(v.getId()){
-            case R.id.meeting_form_slot:
-
-                break;
-            case R.id.meeting_form_attachment:
-
-                break;
 
 
-        }
-
-
+        Intent intent =new Intent(MeetingForm.this, MainActivity.class );
+        startActivity(intent);
     }
 }

@@ -46,7 +46,7 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
 
 
 
-
+/*
         title.setText("");
         name.setText("");
         time.setText("");
@@ -54,7 +54,7 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
         description.setText("");
         details.setText("");
         button1.setText("");
-        button2.setText("");
+        button2.setText("");*/
 
 
 

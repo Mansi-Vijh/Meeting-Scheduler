@@ -8,10 +8,12 @@
         android:layout_height="wrap_content"
         android:text="Name of Proffesor"
         android:id="@+id/professor_lv_row_name"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:lines="1"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="center"/>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +21,10 @@
         android:text="Course name"
         android:textSize="16sp"
         android:lines="2"
-        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_gravity="right"
         />
 
 </LinearLayout>

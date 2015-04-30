@@ -19,5 +19,6 @@
     <string name="title_activity_shedule_meeting">SheduleMeeting</string>
     <string name="title_activity_meeting_form">MeetingForm</string>
     <string name="title_activity_professor_list_view">ProfessorListView</string>
+    <string name="title_activity_registration_page">RegistrationPage</string>
 
 </resources>
