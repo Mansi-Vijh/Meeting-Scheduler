@@ -1,20 +1,42 @@
 package sheduler.meeting.iiitd.meetingsheduler.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TextView;
+
+import java.util.Calendar;
 
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
 public class ScheduleMeeting extends ActionBarActivity implements View.OnClickListener {
 
+    TextView profName, basicDetails;
+    Button selectDate, proceed;
+
+    int mYear, mMonth, mDay;
+    String date;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_a_meeting);
+
+        profName=(TextView) findViewById(R.id.schedule_a_meeting_name);
+        basicDetails=(TextView) findViewById(R.id.schedule_a_meeting_details);
+
+        selectDate=(Button) findViewById(R.id.schedule_a_meeting_date_picker);
+        proceed=(Button) findViewById(R.id.schedule_a_meeting_proceed);
+        selectDate.setOnClickListener(this);
+        proceed.setOnClickListener(this);
+
     }
 
     @Override
@@ -51,6 +73,38 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
 
                 break;
             case R.id.schedule_a_meeting_date_picker:
+
+
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dpd = new DatePickerDialog(this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                System.out.println("1234 : " + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+
+
+
+
+                                if(monthOfYear <9){
+                                    date=year+ "-0" + (monthOfYear + 1) + "-" + dayOfMonth;
+                                }
+                                else{
+                                    date=year+ "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                                }
+                                System.out.println(date);
+
+
+                            }
+                        }, mYear, mMonth, mDay);
+                dpd.show();
+
 
                 break;
 

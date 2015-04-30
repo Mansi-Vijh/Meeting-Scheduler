@@ -1,0 +1,107 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="sheduler.meeting.iiitd.meetingsheduler.activity.AddingRegistrationDetails">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Courses"
+        android:id="@+id/adding_registration_details_tv"
+        android:textSize="18sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="..."
+        android:layout_marginTop="10dp"
+        android:id="@+id/adding_registration_details_tv_courses"
+        android:layout_below="@+id/adding_registration_details_tv"
+        android:textSize="18sp"/>
+ <EditText
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:ems="8"
+     android:hint="add a course"
+     android:layout_marginTop="15dp"
+     android:id="@+id/adding_registration_details_courses"
+     android:layout_below="@+id/adding_registration_details_tv_courses"
+     />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/adding_registration_details_courses_button"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/adding_registration_details_courses"
+        android:layout_below="@+id/adding_registration_details_tv_courses"
+        />
+
+
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/adding_registration_details_rl"
+    android:layout_below="@+id/adding_registration_details_courses"
+    >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="stream ( CSE / ECE )"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+
+        android:id="@+id/adding_registration_details_tv_stream"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="B.Tech. /M.Tech. / Ph.D."
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:layout_below="@+id/adding_registration_details_tv_stream"
+        android:id="@+id/adding_registration_details_tv_program"/>
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Passing year ( 2015 )"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:layout_below="@+id/adding_registration_details_tv_program"
+        android:id="@+id/adding_registration_details_tv_year"/>
+
+
+
+</RelativeLayout>
+
+
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Designation..."
+        android:layout_marginTop="15dp"
+        android:ems="10"
+
+        android:layout_below="@+id/adding_registration_details_rl"
+        android:id="@+id/adding_registration_details_tv_post"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adding_registration_details_submit"
+        android:layout_marginTop="35dp"
+        android:text="Submit"
+
+        android:layout_below="@+id/adding_registration_details_tv_post"
+        android:layout_centerInParent="true"
+        />
+
+</RelativeLayout>

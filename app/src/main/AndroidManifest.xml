@@ -10,11 +10,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.MeetingDetailsActivity"
@@ -28,9 +24,19 @@
             android:name=".activity.MeetingForm"
             android:label="@string/title_activity_meeting_form" >
         </activity>
+
         <activity
-            android:name=".activity.ProfessorListView"
-            android:label="@string/title_activity_professor_list_view" >
+            android:name=".activity.AddingRegistrationDetails"
+            android:label="@string/title_activity_adding_registration_details" >
+        </activity>
+
+        <activity
+            android:name=".activity.RegistrationPage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -24,6 +24,7 @@
         android:id="@+id/meeting_form_title"
         android:hint="Title"
         android:paddingLeft="25dp"
+        android:onClick=""
         android:fontFamily="sans-serif-condensed"
         android:layout_below="@+id/meeting_form_slot"   />
 

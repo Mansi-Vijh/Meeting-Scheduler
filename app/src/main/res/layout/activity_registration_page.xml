@@ -13,7 +13,7 @@
         android:inputType="textPersonName"
         android:text="Name"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/registration_name"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 <RadioGroup
@@ -21,9 +21,8 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="50dp"
-    android:layout_below="@+id/editText"
-
-    android:id="@+id/radio_button">
+    android:layout_below="@+id/registration_name"
+    android:id="@+id/registration_page_radio_button">
 
     <RadioButton
         android:layout_width="wrap_content"
@@ -52,10 +51,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Next"
-        android:layout_below="@+id/radio_button"
+        android:layout_below="@+id/registration_page_radio_button"
         android:layout_marginTop="50dp"
         android:drawableRight="@drawable/ic_drawer"
-        android:id="@+id/registration_page_button"
+        android:id="@+id/registration_page_next"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

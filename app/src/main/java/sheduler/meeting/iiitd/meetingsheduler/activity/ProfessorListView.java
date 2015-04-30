@@ -33,6 +33,8 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
     ProfessorListViewAdaptor adapter;
     ArrayList<ProfessorDetails>  professorDetails =new ArrayList<ProfessorDetails>();
     String proffId="";
+    static int flag=0;
+
 
 
     @Override
@@ -53,12 +55,15 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
         super.onStart();
 
 
-        professorListView = (ListView) getView().findViewById(R.id.professor_lv);
 
-        professorListView.setOnItemClickListener(this);
-        prepData();
-        adapter=new ProfessorListViewAdaptor(professorDetails , getActivity());
-        professorListView.setAdapter(adapter);
+        if(flag==0) {
+            professorListView = (ListView) getView().findViewById(R.id.professor_lv);
+
+            professorListView.setOnItemClickListener(this);
+            prepData();
+            adapter = new ProfessorListViewAdaptor(professorDetails, getActivity());
+            professorListView.setAdapter(adapter);
+        }
 
 
 
