@@ -72,49 +72,69 @@ public class SettingsFragment extends Fragment {
 
                 // Show Alert
 
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create(); //Read Update
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()); //Read Update
 
                 if(position == 0) {
-                    alertDialog.setTitle("About Us");
-                    alertDialog.setMessage("This is a meeting scheduler. It is used for scheduling meetings. Yay!  ");
+                    builder.setTitle("About Us");
+                    builder.setMessage("This is a meeting scheduler. It is used for scheduling meetings. Yay!  ");
+                    builder.setNegativeButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
+
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
                 if(position == 1) {
 
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Notification Settings");
                     builder.setSingleChoiceItems(Status, 1, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int item) {
 
-                            notif_status=item;
+                            notif_status = item;
                         }
                     });
+                    builder.setNegativeButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
+
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
                 if(position == 2)
                 {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Sound Settings");
                     builder.setSingleChoiceItems(Sounds, 1, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int item) {
 
-                            notif_status=item;
+                            notif_status = item;
                         }
                     });
+                    builder.setNegativeButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
 
-                    alertDialog.setButton(1,"Ok", new DialogInterface.OnClickListener(){
 
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
 
-                alertDialog.setCancelable(true);
-                alertDialog.show();  //<-- See This!
             }
                // Toast.makeText(getActivity(),
                 //        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)

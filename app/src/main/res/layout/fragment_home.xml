@@ -1,15 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="sheduler.meeting.iiitd.meetingsheduler.activity.HomeFragment">
 
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="10dp"
+        android:dividerHeight="7dp"
         android:divider="#ffffff"
-        android:id="@+id/prof_list_view_lv">
+        android:id="@+id/prof_list_view_lv"
+
+        >
 
     </ListView>
 
-</FrameLayout>
+</RelativeLayout>

@@ -21,5 +21,6 @@
     <string name="title_activity_professor_list_view">ProfessorListView</string>
     <string name="title_activity_registration_page">RegistrationPage</string>
     <string name="title_activity_adding_registration_details">AddingRegistrationDetails</string>
+    <string name="title_activity_settings_fragment">SettingsFragment</string>
 
 </resources>

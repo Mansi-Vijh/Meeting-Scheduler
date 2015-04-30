@@ -38,10 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.SettingsFragment"
-            android:label="@string/title_activity_settings_fragment" >
-        </activity>
+
     </application>
 
 </manifest>
