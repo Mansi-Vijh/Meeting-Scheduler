@@ -74,7 +74,7 @@ public class MainActivity extends FragmentActivity
                 break;
 
             case 4: //Settings
-                fragment = new HistoryFragment();
+                fragment = new SettingsFragment();
 
 
                 break;

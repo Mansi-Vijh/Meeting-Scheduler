@@ -20,5 +20,6 @@
     <string name="title_activity_meeting_form">MeetingForm</string>
     <string name="title_activity_professor_list_view">ProfessorListView</string>
     <string name="title_activity_registration_page">RegistrationPage</string>
+    <string name="title_activity_settings_fragment">SettingsFragment</string>
 
 </resources>
