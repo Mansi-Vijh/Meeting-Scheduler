@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.parse.ParseObject;
 
 import java.io.InputStream;
 
@@ -54,7 +55,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
      */
     private boolean mIntentInProgress;
 
-    public String email;
+
     private boolean mSignInClicked;
 
     private ConnectionResult mConnectionResult;
@@ -66,7 +67,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
     private LinearLayout llProfileLayout;
 
 
-
+    public static String objectId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +143,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
 
         getProfileInformation();
         Intent intent =new Intent(this, RegistrationPage.class);
+        intent.putExtra("objectId",objectId);
         startActivity(intent);
         // Get user's information
         //getProfileInformation();
@@ -163,11 +165,13 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
                 String personName = currentPerson.getDisplayName();
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 String personGooglePlusProfile = currentPerson.getUrl();
-                email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
 
-
-
+                ParseObject parseObject = new ParseObject("UserDetails");
+                parseObject.put("Email",email);
+                objectId = parseObject.getString("objectId");
+                System.out.println("987" + objectId);
                 Log.e(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
                         + ", Image: " + personPhotoUrl);
@@ -178,11 +182,13 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
 */
                 pref = getSharedPreferences("meeting_app",0);
                 edit = pref.edit();
-
+                edit.putString("objectId", objectId);
                 edit.putString("UserPhotoUrl",  personPhotoUrl);
                 edit.putString("UserEmail",      email);
                 edit.putString("UserName", personName);
                 edit.commit();
+
+
 
                 // by default the profile url gives 50x50 px image only
                 // we can replace the value with whatever dimension we want by

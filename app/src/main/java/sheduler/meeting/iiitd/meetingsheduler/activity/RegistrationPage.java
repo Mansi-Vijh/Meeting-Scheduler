@@ -17,7 +17,7 @@ import sheduler.meeting.iiitd.meetingsheduler.R;
 public class RegistrationPage extends ActionBarActivity implements View.OnClickListener{
 
     EditText name;
-
+    String objectId;
     String type="Student";
     RadioGroup radioGroup;
     RadioButton radioButtonFaculty,  radioButtonStudent ;
@@ -32,10 +32,12 @@ public class RegistrationPage extends ActionBarActivity implements View.OnClickL
         setContentView(R.layout.activity_registration_page);
 
 
+        Intent intent =  getIntent();
+         objectId = intent.getStringExtra("objectId");
         name=(EditText) findViewById(R.id.registration_name);
         radioGroup=(RadioGroup) findViewById(R.id.registration_page_radio_button);
-       
 
+        System.out.println("654" + objectId);
         radioButtonFaculty = (RadioButton) findViewById(R.id.radio_button_faculty);
         radioButtonStudent = (RadioButton) findViewById(R.id.radio_button_student);
         next=(Button) findViewById(R.id.registration_page_next);
