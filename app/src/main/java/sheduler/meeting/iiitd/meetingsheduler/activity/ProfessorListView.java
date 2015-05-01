@@ -91,6 +91,7 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
             professorListView.setAdapter(adapter);
             prepData();
 
+            flag=1;
         }
 
 
