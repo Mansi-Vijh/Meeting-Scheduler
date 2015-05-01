@@ -114,15 +114,11 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
         System.out.println("678 "+ parseObjectList.size());
         for(int i = 0; i < parseObjectList.size();i++ )
         {
-            ArrayList<String> courses = new ArrayList<String>();
-            courses.add(parseObjectList.get(i).getString("Courses"));
-            System.out.println("12345" + courses);
-            for (int j = 0 ; j < courses.size() ; j ++) {
-                professorDetails.add(new ProfessorDetails(parseObjectList.get(i).getString("Name"), parseObjectList.get(i).getString("Post"), courses.get(j)));
-            }
+                professorDetails.add(new ProfessorDetails(parseObjectList.get(i).getString("Name"), parseObjectList.get(i).getString("Post"),parseObjectList.get(i).getString("Courses")));
+
                 System.out.println("678 " + parseObjectList.get(i).getString("Name") + parseObjectList.get(i).getString("Post") + parseObjectList.get(i).getString("Courses"));
 
-            }
+        }
 
 
         adapter.notifyDataSetChanged();
