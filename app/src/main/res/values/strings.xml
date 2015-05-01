@@ -23,4 +23,8 @@
     <string name="title_activity_adding_registration_details">AddingRegistrationDetails</string>
     <string name="title_activity_settings_fragment">SettingsFragment</string>
 
+    <string name="btn_logout_from_google">Logout from Google</string>
+    <string name="btn_revoke_access">Revoke Access</string>
+    <string name="title_activity_google_login">GoogleLogin</string>
+
 </resources>

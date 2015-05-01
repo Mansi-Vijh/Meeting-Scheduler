@@ -68,7 +68,7 @@ public class MainActivity extends FragmentActivity
 
                 break;
             case 3: //Profile
-                fragment = new HistoryFragment();
+                fragment = new ProfilePage();
 
 
                 break;

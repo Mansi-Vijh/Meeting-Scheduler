@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sheduler.meeting.iiitd.meetingsheduler" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +14,14 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
-
         </activity>
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyA1UPLuYnTN9lsP0igHBAbvwrpB0mYSP74" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".activity.MeetingDetailsActivity"
             android:label="@string/title_activity_meeting_details" >
@@ -24,19 +34,23 @@
             android:name=".activity.MeetingForm"
             android:label="@string/title_activity_meeting_form" >
         </activity>
-
         <activity
             android:name=".activity.AddingRegistrationDetails"
             android:label="@string/title_activity_adding_registration_details" >
         </activity>
+        <activity android:name=".activity.RegistrationPage" >
+
+        </activity>
 
         <activity
-            android:name=".activity.RegistrationPage">
+            android:name=".activity.GoogleLogin">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
     </application>
