@@ -47,8 +47,8 @@ public class SettingsFragment extends Fragment {
         listView = (ListView) getView().findViewById(R.id.listViewSettings);
         String[] values = new String[] { "About Us",
                 "Notification Settings",
-                "Calendar Settings",
                 "Sounds",
+                "Calendar Settings",
                 "Feedback",
                 "Rate the App"
         };
