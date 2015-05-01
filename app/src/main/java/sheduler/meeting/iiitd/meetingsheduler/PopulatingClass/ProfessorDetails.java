@@ -14,7 +14,7 @@ public class ProfessorDetails {
         return course;
     }
 
-    public ProfessorDetails(String profName, String course) {
+    public ProfessorDetails(String profName, String post, String course) {
         this.profName = profName;
         this.course = course;
     }

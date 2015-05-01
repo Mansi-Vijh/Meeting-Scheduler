@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -27,6 +29,7 @@ import com.parse.ParseQuery;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import sheduler.meeting.iiitd.meetingsheduler.Adapters.ProfListViewRowAdapter;
 import sheduler.meeting.iiitd.meetingsheduler.Adapters.ProfessorListViewAdaptor;
@@ -40,8 +43,7 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
     ArrayList<ProfessorDetails>  professorDetails =new ArrayList<ProfessorDetails>();
     String proffId="";
     static int flag=0;
-
-
+    ArrayList<ParseObject> parseObjectList = new ArrayList<ParseObject>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,20 +52,13 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
 
         Parse.initialize(getActivity(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
-        query.getInBackground("8PsxDPQu7N", new GetCallback<ParseObject>() {
+        query.whereEqualTo("UserType", "Professor");
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
 
-            public void done(ParseObject parseObject, com.parse.ParseException e) {
-                  String name = "";
-                  String role = "";
-                  String email = "";
-                   name = parseObject.getString("Name");
-                   role = parseObject.getString("UserType");
-                   email = parseObject.getString("Email");
-                  System.out.println("12345");
-                  System.out.println(name);
-                  System.out.println("UserType");
-                  System.out.println(role);
+                for (int i = 0 ; i < parseObjects.size();i++ )
+                    parseObjectList.add(parseObjects.get(i));
             }
         });
     }
@@ -108,11 +103,15 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
 
     void prepData(){
 
+        for(int i = 0; i < parseObjectList.size();i++ )
+        {
+            professorDetails.add(new ProfessorDetails(parseObjectList.get(i).getString("Name"),parseObjectList.get(i).getString("Post"),parseObjectList.get(i).getString("Courses")));
+        }
 
-        professorDetails.add(new ProfessorDetails("vinayak naik", "mobile computing, computer networks, cool guy teaching cool subjects"));
+        /*professorDetails.add(new ProfessorDetails("vinayak naik", "mobile computing, computer networks, cool guy teaching cool subjects"));
         professorDetails.add(new ProfessorDetails("pushpendra singh","cloud computing"));
         professorDetails.add(new ProfessorDetails("rahul kohli","universal teacher"));
-
+*/
     }
 
 
