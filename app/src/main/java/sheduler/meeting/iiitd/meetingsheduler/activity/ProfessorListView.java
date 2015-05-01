@@ -20,6 +20,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import sheduler.meeting.iiitd.meetingsheduler.Adapters.ProfListViewRowAdapter;
@@ -40,6 +46,26 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Parse.enableLocalDatastore(getActivity());
+
+        Parse.initialize(getActivity(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
+        query.getInBackground("8PsxDPQu7N", new GetCallback<ParseObject>() {
+            @Override
+
+            public void done(ParseObject parseObject, com.parse.ParseException e) {
+                  String name = "";
+                  String role = "";
+                  String email = "";
+                   name = parseObject.getString("Name");
+                   role = parseObject.getString("UserType");
+                   email = parseObject.getString("Email");
+                  System.out.println("12345");
+                  System.out.println(name);
+                  System.out.println("UserType");
+                  System.out.println(role);
+            }
+        });
     }
 
     @Override
