@@ -48,19 +48,7 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Parse.enableLocalDatastore(getActivity());
 
-        Parse.initialize(getActivity(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
-        query.whereEqualTo("UserType", "Professor");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
-
-                for (int i = 0 ; i < parseObjects.size();i++ )
-                    parseObjectList.add(parseObjects.get(i));
-            }
-        });
     }
 
     @Override
@@ -76,14 +64,33 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
         super.onStart();
 
 
-
         if(flag==0) {
+
+        Parse.enableLocalDatastore(getActivity());
+
+        Parse.initialize(getActivity(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
+        query.whereEqualTo("UserType", "Professor");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                System.out.println("678 8 " + parseObjects.size());
+
+                for (int i = 0; i < parseObjects.size(); i++)
+                    parseObjectList.add(parseObjects.get(i));
+                System.out.println("678 8 "+ parseObjectList.get(0).getString("Name"));
+                prepData();
+            }
+        });
+
+
             professorListView = (ListView) getView().findViewById(R.id.professor_lv);
 
             professorListView.setOnItemClickListener(this);
-            prepData();
             adapter = new ProfessorListViewAdaptor(professorDetails, getActivity());
             professorListView.setAdapter(adapter);
+            prepData();
+
         }
 
 
@@ -103,11 +110,17 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
 
     void prepData(){
 
+
+        System.out.println("678 "+ parseObjectList.size());
         for(int i = 0; i < parseObjectList.size();i++ )
         {
-            professorDetails.add(new ProfessorDetails(parseObjectList.get(i).getString("Name"),parseObjectList.get(i).getString("Post"),parseObjectList.get(i).getString("Courses")));
+            String course=parseObjectList.get(i).getString("Courses");
+            professorDetails.add(new ProfessorDetails(parseObjectList.get(i).getString("Name"),parseObjectList.get(i).getString("Post"),course));
+            System.out.println("678 " + parseObjectList.get(i).getString("Name") + parseObjectList.get(i).getString("Post") + parseObjectList.get(i).getString("Courses"));
         }
 
+
+        adapter.notifyDataSetChanged();
         /*professorDetails.add(new ProfessorDetails("vinayak naik", "mobile computing, computer networks, cool guy teaching cool subjects"));
         professorDetails.add(new ProfessorDetails("pushpendra singh","cloud computing"));
         professorDetails.add(new ProfessorDetails("rahul kohli","universal teacher"));

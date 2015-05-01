@@ -10,6 +10,16 @@ public class ProfessorDetails {
     private String time;
     private String date;
 
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    private String post;
+
     public String getCourse() {
         return course;
     }
@@ -17,6 +27,7 @@ public class ProfessorDetails {
     public ProfessorDetails(String profName, String post, String course) {
         this.profName = profName;
         this.course = course;
+        this.post=post;
     }
 
     public void setCourse(String course) {

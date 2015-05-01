@@ -22,7 +22,7 @@ public class ProfessorListViewAdaptor extends BaseAdapter {
    // Context context;
     LayoutInflater inflater;
 
-    TextView name, course;
+    TextView name, course, post;
 
     public ProfessorListViewAdaptor(ArrayList<ProfessorDetails> professorDetails, Context context) {
         this.professorDetails = professorDetails;
@@ -52,10 +52,11 @@ public class ProfessorListViewAdaptor extends BaseAdapter {
 
         name=(TextView) convertView.findViewById(R.id.professor_lv_row_name);
         course=(TextView) convertView.findViewById(R.id.professor_lv_row_course);
+        post=(TextView) convertView.findViewById(R.id.professor_lv_row_post);
 
         name.setText(professorDetails.get(position).getProfName());
         course.setText(professorDetails.get(position).getCourse());
-
+        post.setText(professorDetails.get(position).getPost());
 
         return convertView;
     }
