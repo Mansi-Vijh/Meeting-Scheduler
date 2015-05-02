@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
+//import com.google.android.gms.plus.Plus;
+//import com.google.android.gms.plus.model.people.Person;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseObject;

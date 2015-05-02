@@ -1,6 +1,7 @@
 package sheduler.meeting.iiitd.meetingsheduler.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.Parse;
+import com.parse.ParseObject;
+
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
 public class MeetingForm extends ActionBarActivity implements View.OnClickListener {
@@ -17,12 +21,15 @@ public class MeetingForm extends ActionBarActivity implements View.OnClickListen
     EditText title, description, details, attachment;
     Button sendRequest;
     TextView slot;
+    SharedPreferences pref;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting_form);
 
+        Parse.initialize(this, "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
         Intent intent;
 
 
@@ -35,6 +42,8 @@ public class MeetingForm extends ActionBarActivity implements View.OnClickListen
 
 
         sendRequest.setOnClickListener(this);
+
+
 
     }
 
@@ -63,9 +72,29 @@ public class MeetingForm extends ActionBarActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
+        Intent intent = getIntent();
+        intent.getStringExtra("proffessor_id");
 
 
-        Intent intent =new Intent(MeetingForm.this, MainActivity.class );
+      pref = getSharedPreferences("meeting_app",0);
+      userId = pref.getString("objectId","");
+      String titleText = title.getText().toString();
+      String descriptionText = description.getText().toString();
+      String detailsText = details.getText().toString();
+      String attachmentLinkText = attachment.getText().toString();
+
+       ParseObject meetingdetails = new ParseObject("MeetingDetails");
+        meetingdetails.put("FromID", userId);
+        meetingdetails.put("ToID", intent);
+        meetingdetails.put("Title", titleText);
+        meetingdetails.put("Description", descriptionText);
+        meetingdetails.put("Details", detailsText);
+        meetingdetails.put("AttachmentLink",attachmentLinkText);
+
+        meetingdetails.saveInBackground();
+
+
+         intent =new Intent(MeetingForm.this, MainActivity.class );
         startActivity(intent);
     }
 }
