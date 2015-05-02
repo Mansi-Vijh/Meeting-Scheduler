@@ -145,12 +145,33 @@ public class ProfilePage extends Fragment implements View.OnClickListener,
         switch(v.getId()){
             case R.id.btn_sign_out:
                 // Signout button clicked
+
+                // Clear cache...
+
+
+                pref = getActivity().getSharedPreferences("meeting_app", 0);
+                edit = pref.edit();
+                edit.putString("objectId", " ");
+                edit.putString("UserPhotoUrl"," ");
+                edit.putString("UserEmail", " ");
+                edit.putString("UserName", " ");
+
+
+                edit.putString("objectId", " ");
+                edit.putString("type", " ");
+                edit.putString("courses"," ");
+                edit.putString("post", " ");
+                edit.putString("stream", " ");
+                edit.putString("year", " ");
+                edit.putString("programme"," ");
+                edit.commit();
+
                 signOutFromGplus();
                 break;
             case R.id.profile_edit_details:
                 // Signout button clicked
-                Intent intent = new Intent(getActivity(),  AddingRegistrationDetails.class);
-                intent.putExtra("type", "Student");
+                Intent intent = new Intent(getActivity(),  ProfileEdit.class);
+             //   intent.putExtra("type", "Student");
                 startActivity(intent);
                 break;
 

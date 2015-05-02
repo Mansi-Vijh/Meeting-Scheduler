@@ -1,6 +1,7 @@
 package sheduler.meeting.iiitd.meetingsheduler.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
 
     ListView profListView;
 
+    int flag=0;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -64,12 +66,14 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
     public void onStart() {
         super.onStart();
 
-        profListView=(ListView) getView().findViewById(R.id.prof_list_view_lv);
-        populateData();
-        adapter=new ProfListViewRowAdapter(profPopulate, getActivity());
-        profListView.setAdapter(adapter);
-        profListView.setOnItemClickListener(this);
-
+        if(flag==0) {
+            profListView = (ListView) getView().findViewById(R.id.prof_list_view_lv);
+            populateData();
+            adapter = new ProfListViewRowAdapter(profPopulate, getActivity());
+            profListView.setAdapter(adapter);
+            profListView.setOnItemClickListener(this);
+            flag = 1;
+        }
     }
 
     @Override
@@ -86,5 +90,14 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+        String name = "YAYYY!";
+        String meetingId=profPopulate.get(position).getMeetingId();
+        String status=profPopulate.get(position).getStatus();
+        Intent intent=new Intent(getActivity(), MeetingDetailsActivity.class);
+        intent.putExtra("meeting_id",meetingId);
+        intent.putExtra("status",status);
+        intent.putExtra("name",name);
+        startActivity(intent);
     }
 }
