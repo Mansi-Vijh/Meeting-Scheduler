@@ -2,15 +2,23 @@ package sheduler.meeting.iiitd.meetingsheduler.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import sheduler.meeting.iiitd.meetingsheduler.R;
 import sheduler.meeting.iiitd.meetingsheduler.Adapters.ProfListViewRowAdapter;
@@ -18,9 +26,7 @@ import sheduler.meeting.iiitd.meetingsheduler.PopulatingClass.ProfessorDetails;
 
 public class HistoryFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-
-
-
+    SharedPreferences pref;
     ArrayList<ProfessorDetails> profPopulate = new ArrayList<ProfessorDetails>();
 
     ProfListViewRowAdapter adapter;
@@ -46,18 +52,41 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
     }
 
     public void populateData() {
+        pref = getActivity().getSharedPreferences("meeting_app",0);
+        String userId = pref.getString("objectId","");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
 
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "25", "April","Approved"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "26", "April","Pending"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "27", "April","Pending"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "28", "April","Approved"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "29", "April","Pending"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "30", "April","Approved"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "2", "May","Pending"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "5", "May","Approved"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "6", "May","Approved"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "10", "May","Pending"));
-        profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "25", "May","Approved"));
+        query.whereEqualTo("fromID", userId);
+        query.findInBackground(new FindCallback<ParseObject>() {
+
+            @Override
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                for(int i = 0 ; i < parseObjects.size(); i++)
+                {
+
+                }
+               // profPopulate.add(new ProfessorDetails(name, parseObjects.get(i)., "2:00 pm", "25", "April","Approved"));
+
+            }
+        });
+
+        query.whereEqualTo("toID", userId);
+        query.findInBackground(new FindCallback<ParseObject>() {
+
+            @Override
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                String name;
+                String title;
+                String other;
+
+                for(int i = 0 ; i < parseObjects.size(); i++)
+                {
+              //      profPopulate.add()
+                }
+                // profPopulate.add(new ProfessorDetails(name, parseObjects.get(i)., "2:00 pm", "25", "April","Approved"));
+
+            }
+        });
 
     }
 
