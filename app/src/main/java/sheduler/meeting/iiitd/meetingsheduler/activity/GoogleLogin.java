@@ -70,8 +70,8 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
 
-    String name = "", courses= "", type ="", stream ="", year = "", programme = "",post = "";
-    public static String email;
+    String name = "", courses= "", type ="", stream ="", year = "", programme = "",post = "", personPhotoUrl ;
+    public static String email="";
     public static String objectId;
 
     @Override
@@ -144,6 +144,11 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
     public void onConnected(Bundle bundle) {
 
         mSignInClicked = false;
+
+        btnSignIn.setVisibility(View.GONE);
+        LinearLayout ll=(LinearLayout) findViewById(R.id.google_login_for_background);
+        ll.setBackground(getResources().getDrawable(R.drawable.back));
+
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 
         /*AsyncCalling calling =new AsyncCalling();
@@ -154,7 +159,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
             Person currentPerson = Plus.PeopleApi
                     .getCurrentPerson(mGoogleApiClient);
             String personName = currentPerson.getDisplayName();
-            String personPhotoUrl = currentPerson.getImage().getUrl();
+            personPhotoUrl = currentPerson.getImage().getUrl();
             String personGooglePlusProfile = currentPerson.getUrl();
             email = Plus.AccountApi.getAccountName(mGoogleApiClient);
            // Parse.enableLocalDatastore(getBaseContext());
@@ -186,12 +191,16 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
                         stream = parseObject.getString("Stream");
                         year = parseObject.getString("Year");
                         programme = parseObject.getString("Programme");
-
-
                         System.out.println("230 " + objectId);
-
                         pref = getSharedPreferences("meeting_app", 0);
                         edit = pref.edit();
+
+                        edit.putString("objectId", objectId);
+                        edit.putString("UserPhotoUrl",personPhotoUrl);
+                        edit.putString("UserEmail", email);
+                        edit.putString("UserName", name);
+
+
                         edit.putString("objectId", objectId);
                         edit.putString("type", type);
                         edit.putString("courses",courses);
@@ -208,9 +217,15 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
                     Intent intent = null;
 
                     if (!isRegistered) {
+                        btnSignIn.setVisibility(View.GONE);
+                        LinearLayout ll=(LinearLayout) findViewById(R.id.google_login_for_background);
+                        ll.setBackground(getResources().getDrawable(R.drawable.back));
                         intent = new Intent(getBaseContext(), RegistrationPage.class);
 
                     } else if (isRegistered) {
+                        btnSignIn.setVisibility(View.GONE);
+                        LinearLayout ll=(LinearLayout) findViewById(R.id.google_login_for_background);
+                        ll.setBackground(getResources().getDrawable(R.drawable.back));
                         intent = new Intent(getBaseContext(), MainActivity.class);
 
                     }
@@ -251,6 +266,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
     }
 
 
+/*
 
     public class AsyncCalling extends AsyncTask<String, String , String>{
 
@@ -322,10 +338,12 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
 
 
 
-                /*txtName.setText(personName);
+                */
+/*txtName.setText(personName);
 
                 txtEmail.setText(email);
-*/
+*//*
+
 
 
 
@@ -361,6 +379,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
         }
     }
 
+*/
 
 
 
@@ -371,7 +390,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
     /**
      * Background Async task to load user profile picture from url
      * */
-    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
+  /*  private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
         public LoadProfileImage(ImageView bmImage) {
@@ -395,7 +414,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
             bmImage.setImageBitmap(result);
         }
     }
-
+*/
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -459,7 +478,12 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
 
         switch (v.getId()) {
             case R.id.btn_sign_in:
+                btnSignIn.setVisibility(View.GONE);
                 // Signin button clicked
+                LinearLayout ll=(LinearLayout) findViewById(R.id.google_login_for_background);
+                ll.setBackground(getResources().getDrawable(R.drawable.back));
+
+
                 signInWithGplus();
                 break;
             case R.id.btn_sign_out:

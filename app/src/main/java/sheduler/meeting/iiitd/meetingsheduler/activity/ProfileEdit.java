@@ -72,13 +72,13 @@ public class ProfileEdit extends ActionBarActivity implements View.OnClickListen
         courses= pref.getString("courses", "");
         type =pref.getString("type", "");
         sStream =pref.getString("stream", "");
-        year = pref.getString("year", "");
+        year = pref.getString("year", "1");
         int yearInt=Integer.parseInt(year);
         programme = pref.getString("programme", "");
         sPost = pref.getString("post", "");
 
         post.setHint(sPost);
-        yearOfPassing.setHint(yearInt);
+        //yearOfPassing.setHint(yearInt);
         etCourse.setHint(courses);
         stream.setHint(sStream);
         program.setHint(programme);
