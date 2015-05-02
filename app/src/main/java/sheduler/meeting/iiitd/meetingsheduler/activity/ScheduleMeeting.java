@@ -11,7 +11,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.util.Calendar;
+import java.util.Date;
 
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
@@ -30,6 +36,8 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
         setContentView(R.layout.activity_schedule_a_meeting);
 
 
+
+        Parse.initialize(getBaseContext(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
 
         Intent intent = getIntent();
         proffId=intent.getStringExtra("proffessor_id");
@@ -97,13 +105,10 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                                 System.out.println("1234 : " + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
 
 
-
-
-                                if(monthOfYear <9){
-                                    date=year+ "-0" + (monthOfYear + 1) + "-" + dayOfMonth;
-                                }
-                                else{
-                                    date=year+ "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                                if (monthOfYear < 9) {
+                                    date = year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth;
+                                } else {
+                                    date = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
                                 }
                                 System.out.println(date);
 
@@ -111,9 +116,23 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                             }
                         }, mYear, mMonth, mDay);
                 dpd.show();
+                System.out.println("*****" + date);
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
+
+                query.getInBackground("GehHfr9xGC", new GetCallback<ParseObject>() {
 
 
+                    @Override
+                    public void done(ParseObject parseObject, com.parse.ParseException e) {
+
+                        Date date_new = parseObject.getDate("Date");
+                        System.out.println("12345 Date" + date_new.getHours() + date_new.getMinutes() + date_new.getDate() );
+
+                    } });
                 break;
+
+        }
+
 
 
         }
@@ -121,4 +140,4 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
 
     }
 
-}
+
