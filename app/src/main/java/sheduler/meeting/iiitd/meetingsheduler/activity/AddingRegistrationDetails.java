@@ -46,6 +46,7 @@ public class AddingRegistrationDetails extends ActionBarActivity implements View
 
         Intent intent=getIntent();
         type=intent.getStringExtra("type");
+        System.out.println("237 4 "+ type);
         objectId = intent.getStringExtra("objectId");
         name = intent.getStringExtra("name");
 
@@ -67,13 +68,14 @@ public class AddingRegistrationDetails extends ActionBarActivity implements View
 
 
 
-        if(type.equals("Faculty")){
+        if(type.equals("Student")){
 
-            studentsRl.setVisibility(View.GONE);
+            post.setVisibility(View.GONE);
 
         }
         else{
-            post.setVisibility(View.GONE);
+
+            studentsRl.setVisibility(View.GONE);
         }
 
     }
@@ -189,6 +191,7 @@ public class AddingRegistrationDetails extends ActionBarActivity implements View
 
         private void putRow() {
 
+            System.out.println("237 5 "+ type);
 
 
             ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
@@ -210,7 +213,7 @@ public class AddingRegistrationDetails extends ActionBarActivity implements View
                         parseObject.put("Programme", program.getText().toString());
                         parseObject.put("Year",Integer.parseInt(yearOfPassing.getText().toString()));
                     } else {
-                        parseObject.put("Post", post);
+                        parseObject.put("Post", post.getText().toString());
                     }
 
                 while(!parseObject.saveInBackground().isCompleted()){

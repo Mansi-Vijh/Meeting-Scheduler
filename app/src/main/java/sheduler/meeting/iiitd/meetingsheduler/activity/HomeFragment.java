@@ -25,6 +25,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     ProfListViewRowAdapter adapter;
 
     ListView profListView;
+    public String name;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -58,6 +59,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     public void populateData() {
 
+        name = "YAYYY!";
         profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "25", "April","Approved"));
         profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "26", "April","Pending"));
         profPopulate.add(new ProfessorDetails("Rahul", "about project descussion", "2:00 pm", "27", "April","Pending"));
@@ -93,6 +95,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         Intent intent=new Intent(getActivity(), MeetingDetailsActivity.class);
         intent.putExtra("meeting_id",meetingId);
         intent.putExtra("status",status);
+        intent.putExtra("name",name);
         startActivity(intent);
 
     }

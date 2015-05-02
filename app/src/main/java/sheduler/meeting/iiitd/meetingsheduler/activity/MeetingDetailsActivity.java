@@ -40,9 +40,10 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
     String name_var;
     String userId;
     String status_var;
-    int clicked_button;
+    int clicked_button = 0;
     SharedPreferences pref;
 
+    int flag=0;
 
 
    //retrieve this from the previous page
@@ -61,7 +62,10 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
         intent.getStringExtra("meetingId");
         */
 
-        meetingId = "ZAuXuhaAiN";
+        meetingId = "Xq1IrOFdJQ";
+
+        Intent intent = getIntent();
+        name_var = intent.getStringExtra("name");
 
         title=(TextView) findViewById(R.id.meeting_details_meeting_title);
         name=(TextView) findViewById(R.id.meeting_details_to_or_from);
@@ -90,6 +94,10 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
         button1.setText("");
         button2.setText("");
 
+
+   /*     PopulatingMeetingDetails populatingMeetingDetails= new PopulatingMeetingDetails();
+        populatingMeetingDetails.execute();
+*/
         ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
 
         query.getInBackground(meetingId, new GetCallback<ParseObject>() {
@@ -98,74 +106,76 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
             @Override
             public void done(ParseObject parseObject, com.parse.ParseException e) {
 
-               String fromId = parseObject.getString("FromID");
-               String toId = parseObject.getString("ToID");
-
-                pref = getSharedPreferences("meeting_app",0);
-                userId =  pref.getString("objectId"," ");
-
-                if (userId.equals(fromId))
+                if(meetingId == null)
                 {
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
-                    query.getInBackground(toId, new GetCallback<ParseObject>() {
+                     System.out.println("Meeting does not exist");
+                }
+                else {
+                    String fromId = parseObject.getString("FromID");
+                    String toId = parseObject.getString("ToID");
+
+                    pref = getSharedPreferences("meeting_app", 0);
+                    userId = pref.getString("objectId", " ");
+
+                    name.setText(name_var);
+                    /*if (userId.equals(fromId)) {
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
+                        query.getInBackground(toId, new GetCallback<ParseObject>() {
 
 
-                        @Override
-                        public void done(ParseObject parseObject, com.parse.ParseException e) {
+                            @Override
+                            public void done(ParseObject parseObject, com.parse.ParseException e) {
                                 name_var = parseObject.getString("Name");
-                        }
-                    });
+
+                            }
+                        });
+                    } else if (userId.equals(toId)) {
+
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
+                        query.getInBackground(fromId, new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject parseObject, com.parse.ParseException e) {
+                                name_var = parseObject.getString("Name");
+
+                            }
+                        });
+                    }*/
+
+                    System.out.println("name_var");
+                    title_var = parseObject.getString("Title");
+                    title.setText(title_var);
+                    description_var = parseObject.getString("Description");
+                    description.setText(description_var);
+                    attachmentLink_var = parseObject.getString("AttachmentLink");
+                    attachmentLink.setText(attachmentLink_var);
+                    time_var = parseObject.getString("Time");
+                    time.setText(time_var);
+                    details_var = parseObject.getString("Details");
+                    details.setText(details_var);
+                    status_var = parseObject.getString("Status");
+                    if (status_var.equals("Pending")) {
+                        currentStatus = status.pending;
+                        button1.setText("Approve");
+                        button2.setText("Reject");
+                    } else if (status_var.equals("Approved")) {
+                        currentStatus = status.approved;
+                        button1.setText("Cancel");
+                        button2.setVisibility(View.GONE);
+                    } else if (status_var.equals("Cancelled")) {
+                        button1.setVisibility(View.GONE);
+                        button2.setVisibility(View.GONE);
+                        currentStatus = status.cancelled;
+                    } else if (status_var.equals("Rejected")) {
+                        currentStatus = status.rejected;
+                        button1.setVisibility(View.GONE);
+                        button2.setVisibility(View.GONE);
+                    }
+
+
                 }
-
-                else if(userId.equals(toId))
-                {
-
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
-                    query.getInBackground(fromId, new GetCallback<ParseObject>() {
-                        @Override
-                        public void done(ParseObject parseObject, com.parse.ParseException e) {
-                            name_var = parseObject.getString("Name");
-                        }
-                    });
-                }
-
-                name.setText(name_var);
-                title_var = parseObject.getString("Title");
-                title.setText(title_var);
-                description_var = parseObject.getString("Description");
-                description.setText(description_var);
-                attachmentLink_var = parseObject.getString("AttachmentLink");
-                attachmentLink.setText(attachmentLink_var);
-                time_var = parseObject.getString("Time");
-                time.setText(time_var);
-                details_var = parseObject.getString("Details");
-                details.setText(details_var);
-                status_var = parseObject.getString("Status");
-                if(status_var.equals("Pending"))
-                {
-                    currentStatus = status.pending;
-                    button1.setText("Approve");
-                    button2.setText("Reject");
-                }
-                else if(status_var.equals("Approved"))
-                {
-                    currentStatus = status.approved;
-                    button1.setText("Cancel");
-                }
-                else if(status_var.equals("Cancelled"))
-                {
-                    currentStatus = status.cancelled;
-                }
-                else if(status_var.equals("Rejected"))
-                {
-                    currentStatus = status.rejected;
-
-                }
-
-
-
-               }
+            }
         });
+
 
     }
 
@@ -220,6 +230,37 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
     }
 
 
+    public class PopulatingMeetingDetails extends AsyncTask<String, String , String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            updateStatus();
+
+            return null;
+        }
+
+        private void updateStatus() {
+
+
+        }
+
+
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+    }
+
+
+
+
+
 
     public class AsyncCalling extends AsyncTask<String, String , String> {
 
@@ -269,6 +310,7 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            name.setText(name_var);
 
             if (clicked_button == 1) {
                 if (currentStatus.equals(status.approved)) {

@@ -70,7 +70,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
 
-
+    public static String email;
     public static String objectId;
 
     @Override
@@ -145,8 +145,87 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
         mSignInClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 
-        AsyncCalling calling =new AsyncCalling();
+        /*AsyncCalling calling =new AsyncCalling();
         calling.execute();
+        */
+        try {
+        if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+            Person currentPerson = Plus.PeopleApi
+                    .getCurrentPerson(mGoogleApiClient);
+            String personName = currentPerson.getDisplayName();
+            String personPhotoUrl = currentPerson.getImage().getUrl();
+            String personGooglePlusProfile = currentPerson.getUrl();
+            email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+           // Parse.enableLocalDatastore(getBaseContext());
+            Parse.initialize(getBaseContext(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
+
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
+            query.whereEqualTo("Email", email);
+
+            query.getFirstInBackground(new GetCallback<ParseObject>() {
+
+                @Override
+                public void done(ParseObject parseObject, com.parse.ParseException e) {
+                    if (parseObject == null) {
+                        ParseObject parseObj = new ParseObject("UserDetails");
+                        System.out.println(" 123 1 new object created");
+                        parseObj.put("Email", email);
+                        while (!parseObj.saveInBackground().isCompleted()) {
+                        }
+                        isRegistered = false;
+                        objectId = parseObj.getObjectId();
+                    } else {
+                        System.out.println("object exists. sent to Main");
+                        isRegistered = true;
+                        objectId = parseObject.getObjectId();
+                        System.out.println("230 " + objectId);
+
+                        pref = getSharedPreferences("meeting_app", 0);
+                        edit = pref.edit();
+                        edit.putString("objectId", objectId);
+
+                        edit.commit();
+
+                    }
+
+
+                    Intent intent = null;
+
+                    if (!isRegistered) {
+                        intent = new Intent(getBaseContext(), RegistrationPage.class);
+
+                    } else if (isRegistered) {
+                        intent = new Intent(getBaseContext(), MainActivity.class);
+
+                    }
+                    intent.putExtra("objectId", objectId);
+                    startActivity(intent);
+
+
+                }
+            });
+
+
+
+
+
+                /*txtName.setText(personName);
+
+                txtEmail.setText(email);
+*/
+
+
+
+
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Person information is null", Toast.LENGTH_LONG).show();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+
         // Get user's information
         //getProfileInformation();
 
@@ -179,64 +258,56 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
                     String personName = currentPerson.getDisplayName();
                     String personPhotoUrl = currentPerson.getImage().getUrl();
                     String personGooglePlusProfile = currentPerson.getUrl();
-                    final String  email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                      email = Plus.AccountApi.getAccountName(mGoogleApiClient);
                     Parse.enableLocalDatastore(getBaseContext());
                     Parse.initialize(getBaseContext(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
 
                     ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
                     query.whereEqualTo("Email", email);
+
                     query.getFirstInBackground(new GetCallback<ParseObject>() {
 
                         @Override
                         public void done(ParseObject parseObject, com.parse.ParseException e) {
                             if (parseObject == null) {
 
-                                System.out.println("new object created");
-                                parseObject.put("Email",email);
-                                System.out.println("object exists. sent to Main");
-                                while(!parseObject.saveInBackground().isCompleted()){
-                                isRegistered = false;
+                                System.out.println(" 123 1 new object created");
+                                parseObject.put("Email", email);
+                                while (!parseObject.saveInBackground().isCompleted()) {
                                 }
+                                isRegistered = false;
                                 objectId = parseObject.getObjectId();
-                            }
-                            else
-                            {
+                            } else {
+                                System.out.println("object exists. sent to Main");
                                 isRegistered = true;
                                 objectId = parseObject.getObjectId();
+                                System.out.println("230 " + objectId);
+
+
+
                             }
+
+
                         }
                     });
 
-
-
-
-                    System.out.println("987" + objectId);
-                    Log.e(TAG, "Name: " + personName + ", plusProfile: "
-                            + personGooglePlusProfile + ", email: " + email
-                            + ", Image: " + personPhotoUrl);
-
-                /*txtName.setText(personName);
-
-                txtEmail.setText(email);
-*/
-                    pref = getSharedPreferences("meeting_app",0);
+                    pref = getSharedPreferences("meeting_app", 0);
                     edit = pref.edit();
                     edit.putString("objectId", objectId);
-                    edit.putString("UserPhotoUrl",  personPhotoUrl);
-                    edit.putString("UserEmail",      email);
+                    edit.putString("UserPhotoUrl", personPhotoUrl);
+                    edit.putString("UserEmail", email);
                     edit.putString("UserName", personName);
                     edit.commit();
 
 
 
-                    // by default the profile url gives 50x50 px image only
-                    // we can replace the value with whatever dimension we want by
-                    // replacing sz=X
-                    personPhotoUrl = personPhotoUrl.substring(0,
-                            personPhotoUrl.length() - 2)
-                            + PROFILE_PIC_SIZE;
+                /*txtName.setText(personName);
 
-                    new LoadProfileImage(imgProfilePic).execute(personPhotoUrl);
+                txtEmail.setText(email);
+*/
+
+
+
 
                 } else {
                     Toast.makeText(getApplicationContext(),
@@ -252,14 +323,15 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            System.out.println("987" + objectId);
 
             Intent intent = null;
 
-            if(isRegistered == false) {
+            if(!isRegistered) {
                 intent = new Intent(getBaseContext(), RegistrationPage.class);
 
             }
-            else if(isRegistered == true) {
+            else if(isRegistered) {
                 intent = new Intent(getBaseContext(), MainActivity.class);
 
             }
