@@ -1,5 +1,6 @@
 package sheduler.meeting.iiitd.meetingsheduler.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,12 +10,23 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.text.ParseException;
+import java.util.List;
+
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
 public class MeetingDetailsActivity extends ActionBarActivity implements View.OnClickListener{
 
     TextView name,time,attachmentLink, description, details,title;
     Button button1, button2;
+    String meetingId;
+   //retrieve this from the previous page
 
 
     enum status{pending, approved, canceled, rejected};
@@ -25,6 +37,12 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting_details);
+
+        /*Intent intent = getIntent();
+        intent.getStringExtra("meetingId");
+        */
+
+        meetingId = "ZAuXuhaAiN";
 
         title=(TextView) findViewById(R.id.meeting_details_meeting_title);
         name=(TextView) findViewById(R.id.meeting_details_to_or_from);
@@ -44,9 +62,6 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
         }*/
 
 
-
-
-/*
         title.setText("");
         name.setText("");
         time.setText("");
@@ -54,9 +69,24 @@ public class MeetingDetailsActivity extends ActionBarActivity implements View.On
         description.setText("");
         details.setText("");
         button1.setText("");
-        button2.setText("");*/
+        button2.setText("");
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
+
+        query.getInBackground(meetingId, new GetCallback<ParseObject>() {
 
 
+            @Override
+            public void done(ParseObject parseObject, com.parse.ParseException e) {
+
+               String fromId = parseObject.getString("");
+               title.setText(parseObject.getString("Title"));
+               description.setText(parseObject.getString("Description"));
+               attachmentLink.setText(parseObject.getString("AttachmentLink"));
+               time.setText(parseObject.getString("Time"));
+               details.setText(parseObject.getString("Details"));
+               }
+        });
 
     }
 

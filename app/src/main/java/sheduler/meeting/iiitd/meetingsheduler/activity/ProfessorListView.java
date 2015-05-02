@@ -42,7 +42,7 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
     ProfessorListViewAdaptor adapter;
     ArrayList<ProfessorDetails>  professorDetails =new ArrayList<ProfessorDetails>();
     String proffId="";
-    static int flag=0;
+    int flag=0;
     ArrayList<ParseObject> parseObjectList = new ArrayList<ParseObject>();
 
     @Override
