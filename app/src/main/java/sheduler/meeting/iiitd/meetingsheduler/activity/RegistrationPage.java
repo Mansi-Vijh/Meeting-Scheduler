@@ -101,7 +101,7 @@ public class RegistrationPage extends ActionBarActivity implements View.OnClickL
                 Intent intent=new Intent(RegistrationPage.this, AddingRegistrationDetails.class);
                 intent.putExtra("type", type);
                 intent.putExtra("objectId", objectId);
-                intent.putExtra("name", name.getText());
+                intent.putExtra("name", name.getText().toString());
                 startActivity(intent);
 
                 break;
