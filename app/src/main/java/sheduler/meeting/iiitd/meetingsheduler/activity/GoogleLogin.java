@@ -70,6 +70,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
 
+    String name = "", courses= "", type ="", stream ="", year = "", programme = "",post = "";
     public static String email;
     public static String objectId;
 
@@ -178,11 +179,26 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
                         System.out.println("object exists. sent to Main");
                         isRegistered = true;
                         objectId = parseObject.getObjectId();
+                        name = parseObject.getString("Name");
+                        type = parseObject.getString("UserType");
+                        courses = parseObject.getString("Courses");
+                        post = parseObject.getString("Post");
+                        stream = parseObject.getString("Stream");
+                        year = parseObject.getString("Year");
+                        programme = parseObject.getString("Programme");
+
+
                         System.out.println("230 " + objectId);
 
                         pref = getSharedPreferences("meeting_app", 0);
                         edit = pref.edit();
                         edit.putString("objectId", objectId);
+                        edit.putString("type", type);
+                        edit.putString("courses",courses);
+                        edit.putString("post", post);
+                        edit.putString("stream", stream);
+                        edit.putString("year", year);
+                        edit.putString("programme",programme);
 
                         edit.commit();
 
@@ -281,6 +297,11 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
                                 System.out.println("object exists. sent to Main");
                                 isRegistered = true;
                                 objectId = parseObject.getObjectId();
+
+
+
+
+
                                 System.out.println("230 " + objectId);
 
 
