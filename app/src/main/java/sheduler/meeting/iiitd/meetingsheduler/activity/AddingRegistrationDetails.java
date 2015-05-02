@@ -11,13 +11,23 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.text.ParseException;
+
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
 public class AddingRegistrationDetails extends ActionBarActivity implements View.OnClickListener {
 
     TextView tvCourse;
+    String objectId;
+    String name;
     EditText post, yearOfPassing, etCourse, stream, program;
-    String type="", addedCoursese="";
+    String type="", addedCourses="";
+
     Button addCourse, submit;
     RelativeLayout studentsRl;
     int flag=0;
@@ -26,9 +36,13 @@ public class AddingRegistrationDetails extends ActionBarActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_registration_details);
 
+        Parse.initialize(this, "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
+
+
         Intent intent=getIntent();
         type=intent.getStringExtra("type");
-
+        objectId = intent.getStringExtra("objectId");
+        name = intent.getStringExtra("name");
 
         addCourse=(Button) findViewById(R.id.adding_registration_details_courses_button);
         submit=(Button) findViewById(R.id.adding_registration_details_submit);
@@ -89,14 +103,14 @@ public class AddingRegistrationDetails extends ActionBarActivity implements View
             case R.id.adding_registration_details_courses_button:
 
                 if(flag==0){
-                    addedCoursese=addedCoursese+ etCourse.getText() ;
+                    addedCourses=addedCourses+ etCourse.getText() ;
                     flag=1;
                 }
                 else{
-                    addedCoursese=addedCoursese+", "+ etCourse.getText() ;
+                    addedCourses=addedCourses+", "+ etCourse.getText() ;
                 }
 
-                tvCourse.setText(addedCoursese);
+                tvCourse.setText(addedCourses);
                 etCourse.setText("");
 
                 break;
@@ -104,8 +118,38 @@ public class AddingRegistrationDetails extends ActionBarActivity implements View
 
             case R.id.adding_registration_details_submit:
 
+
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
+
+// Retrieve the object by id
+                query.getInBackground(objectId, new GetCallback<ParseObject>() {
+
+                    @Override
+                    public void done(ParseObject parseObject, com.parse.ParseException e) {
+                        if(e == null)
+                        {
+                            parseObject.put("UserType",type);
+                            parseObject.put("Name",name);
+                            parseObject.put("Courses",addedCourses);
+
+                            if(type.equals("Professor"))
+                            {
+                                parseObject.put("Post",post);
+                            }
+                            else if(type.equals("Student"))
+                            {
+                                parseObject.put("Stream",stream);
+                                parseObject.put("Programme",program);
+                                parseObject.put("Year",yearOfPassing);
+                            }
+
+                        }
+                    }
+                });
+
+
                 Intent intent=new Intent(AddingRegistrationDetails.this,MainActivity.class);
-                intent.putExtra("type", type);
+                intent.putExtra("objectId", objectId);
                 startActivity(intent);
 
                 break;
