@@ -141,7 +141,7 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
         System.out.println("check 476 "+ proffId);
         Intent intent =new Intent(getActivity() , ScheduleMeeting.class);
 
-        intent.putExtra("proffessor_id",proffId);
+        intent.putExtra("professor_id",proffId);
 
 
 

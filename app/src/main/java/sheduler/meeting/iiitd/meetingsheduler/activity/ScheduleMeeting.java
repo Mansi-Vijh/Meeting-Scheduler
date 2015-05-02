@@ -27,7 +27,7 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
     Button selectDate, proceed;
 
     int mYear, mMonth, mDay;
-    String date, proffId;
+    String date, profId;
 
 
     @Override
@@ -40,7 +40,7 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
         Parse.initialize(getBaseContext(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
 
         Intent intent = getIntent();
-        proffId=intent.getStringExtra("proffessor_id");
+        profId=intent.getStringExtra("professor_id");
 
 
         profName=(TextView) findViewById(R.id.schedule_a_meeting_name);
@@ -83,7 +83,7 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
             case R.id.schedule_a_meeting_proceed:
 
                 Intent intent =new Intent( ScheduleMeeting.this,MeetingForm.class );
-                intent.putExtra("proffessor_id",proffId);
+                intent.putExtra("professor_id",profId);
                 startActivity(intent);
 
                 break;
@@ -116,7 +116,11 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                             }
                         }, mYear, mMonth, mDay);
                 dpd.show();
+<<<<<<< HEAD
 
+=======
+                //System.out.println("*****" + date);
+>>>>>>> origin/master
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
 
                 query.getInBackground("GehHfr9xGC", new GetCallback<ParseObject>() {

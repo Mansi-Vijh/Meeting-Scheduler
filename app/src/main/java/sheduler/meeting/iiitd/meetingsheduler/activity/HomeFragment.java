@@ -24,6 +24,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     ProfListViewRowAdapter adapter;
 
+    int flag=0;
     ListView profListView;
     public String name;
     public HomeFragment() {
@@ -49,11 +50,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onStart() {
         super.onStart();
 
-        profListView=(ListView) getView().findViewById(R.id.prof_list_view_lv);
-        populateData();
-        adapter=new ProfListViewRowAdapter(profPopulate, getActivity());
-        profListView.setAdapter(adapter);
-        profListView.setOnItemClickListener(this);
+        if(flag==0) {
+            profListView = (ListView) getView().findViewById(R.id.prof_list_view_lv);
+            populateData();
+            adapter = new ProfListViewRowAdapter(profPopulate, getActivity());
+            profListView.setAdapter(adapter);
+            profListView.setOnItemClickListener(this);
+            flag=1;
+        }
 
     }
 

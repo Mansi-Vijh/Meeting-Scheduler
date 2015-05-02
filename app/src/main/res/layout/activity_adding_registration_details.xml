@@ -7,11 +7,17 @@
     tools:context="sheduler.meeting.iiitd.meetingsheduler.activity.AddingRegistrationDetails">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:text="Create Profile"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Courses"
+        android:paddingTop="30dp"
+        android:paddingBottom="15dp"
+        android:background="#3d87f5"
+        android:textColor="#ffffff"
+        android:textSize="21sp"
         android:id="@+id/adding_registration_details_tv"
-        android:textSize="18sp"/>
+        android:gravity="center"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

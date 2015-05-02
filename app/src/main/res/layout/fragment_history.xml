@@ -4,11 +4,27 @@
     tools:context="sheduler.meeting.iiitd.meetingsheduler.activity.HistoryFragment">
 
 
+
+    <TextView
+        android:text="History Page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="15dp"
+        android:background="#3d87f5"
+        android:textColor="#ffffff"
+        android:textSize="21sp"
+        android:id="@+id/history_header"
+        android:gravity="center"
+        />
+
     <ListView
+        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="7dp"
-        android:divider="#ffffff"
+        android:dividerHeight="2dp"
+        android:divider="#f2f2f2"
+        android:layout_below="@+id/history_header"
         android:id="@+id/prof_list_view_lv"
        >
 
