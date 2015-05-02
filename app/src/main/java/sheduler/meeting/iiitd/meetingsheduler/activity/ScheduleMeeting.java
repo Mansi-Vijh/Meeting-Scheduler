@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,13 +12,17 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
@@ -116,26 +121,60 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                             }
                         }, mYear, mMonth, mDay);
                 dpd.show();
-<<<<<<< HEAD
 
-=======
-                //System.out.println("*****" + date);
->>>>>>> origin/master
+
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
 
-                query.getInBackground("GehHfr9xGC", new GetCallback<ParseObject>() {
+                query.whereEqualTo("Date", date);
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    public void done(List<ParseObject> parseObjects, ParseException e) {
+                        if (e == null) {
+                            ArrayList<Integer> slots_notAvailable = new ArrayList<Integer>();
+                            ArrayList<Integer> Overall_slots = new ArrayList<Integer>();
+                            for(int i = 0 ; i< parseObjects.size();i++)
+                            slots_notAvailable.add( parseObjects.get(i).getDate("Date").getHours());
+                            Overall_slots.add(8);
+                            Overall_slots.add(9);
+                            Overall_slots.add(10);
+                            Overall_slots.add(11);
+                            Overall_slots.add(12);
+                            Overall_slots.add(1);
+                            Overall_slots.add(2);
+                            Overall_slots.add(3);
+                            Overall_slots.add(4);
+                            Overall_slots.add(5);
+                            for (int j = 0 ; j < slots_notAvailable.size();j++)
+                            {
+                                Overall_slots.contains(slots_notAvailable.get(j));
+                                Overall_slots.remove(Overall_slots.indexOf(slots_notAvailable.get(j)));
+                            }
 
+                            // populate spinner using the values in Overall_slots
+                            //get the selected value and save it in the variable : new_slot
+                            int new_slot = 8;
+                            ParseObject parseObject = new ParseObject("MeetingDetails");
+                            Date date_new;
+                            date_new = parseObject.getDate("Date");
+                            System.out.println("Date Checking : " + date_new.toString());
+                            //this is the selected slot
+                            date_new.setHours(new_slot);
+                            parseObject.put("Title", "my new title");
+                            parseObject.put("Date", date_new);
+                            parseObject.saveInBackground();
+
+
+
+                            Log.d("Slots", "Retrieved " + parseObjects.size() + " objects");
+                        } else {
+                        }
+                    }
 
                     @Override
-                    public void done(ParseObject parseObject, com.parse.ParseException e) {
+                    public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
 
-                        Date date_new = parseObject.getDate("Date");
-                        System.out.println("Date Checking : " + date_new.toString());
-                        date_new.setHours(8);
-                        parseObject.put("Title", "my new title");
-                        parseObject.put("Date", date_new);
-                        parseObject.saveInBackground();
-                    } });
+                    }
+                });
+
                 break;
 
         }
