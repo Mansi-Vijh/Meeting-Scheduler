@@ -49,6 +49,10 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+       // Parse.enableLocalDatastore(getActivity());
+
+        Parse.initialize(getActivity(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
+
     }
 
     @Override
@@ -66,10 +70,7 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
 
         if(flag==0) {
 
-        Parse.enableLocalDatastore(getActivity());
-
-        Parse.initialize(getActivity(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
+         ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
         query.whereEqualTo("UserType", "Professor");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -78,7 +79,7 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
 
                 for (int i = 0; i < parseObjects.size(); i++)
                     parseObjectList.add(parseObjects.get(i));
-                System.out.println("678 8 "+ parseObjectList.get(0).getString("Name"));
+                System.out.println("678 8 " + parseObjectList.get(0).getString("Name"));
                 prepData();
             }
         });
@@ -115,7 +116,7 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
         System.out.println("678 "+ parseObjectList.size());
         for(int i = 0; i < parseObjectList.size();i++ )
         {
-                professorDetails.add(new ProfessorDetails(parseObjectList.get(i).getString("Name"), parseObjectList.get(i).getString("Post"),parseObjectList.get(i).getString("Courses")));
+                professorDetails.add(new ProfessorDetails(parseObjectList.get(i).getString("Name"), parseObjectList.get(i).getString("Post"), parseObjectList.get(i).getString("Courses")));
 
                 System.out.println("678 " + parseObjectList.get(i).getString("Name") + parseObjectList.get(i).getString("Post") + parseObjectList.get(i).getString("Courses"));
 

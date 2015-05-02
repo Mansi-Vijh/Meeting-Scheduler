@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.parse.Parse;
 import com.parse.ParseObject;
 
 import java.io.InputStream;
@@ -141,10 +142,8 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
         mSignInClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 
-        getProfileInformation();
-        Intent intent =new Intent(this, RegistrationPage.class);
-        intent.putExtra("objectId",objectId);
-        startActivity(intent);
+        AsyncCalling calling =new AsyncCalling();
+        calling.execute();
         // Get user's information
         //getProfileInformation();
 
@@ -154,60 +153,100 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
     }
 
 
-    /**
-     * Fetching user's information name, email, profile pic
-     * */
-    private void getProfileInformation() {
-        try {
-            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-                Person currentPerson = Plus.PeopleApi
-                        .getCurrentPerson(mGoogleApiClient);
-                String personName = currentPerson.getDisplayName();
-                String personPhotoUrl = currentPerson.getImage().getUrl();
-                String personGooglePlusProfile = currentPerson.getUrl();
-                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
+    public class AsyncCalling extends AsyncTask<String, String , String>{
 
-                ParseObject parseObject = new ParseObject("UserDetails");
-                parseObject.put("Email",email);
-                objectId = parseObject.getString("objectId");
-                System.out.println("987" + objectId);
-                Log.e(TAG, "Name: " + personName + ", plusProfile: "
-                        + personGooglePlusProfile + ", email: " + email
-                        + ", Image: " + personPhotoUrl);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            getProfileInformation();
+
+            return null;
+        }
+
+        private void getProfileInformation() {
+            try {
+                if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+                    Person currentPerson = Plus.PeopleApi
+                            .getCurrentPerson(mGoogleApiClient);
+                    String personName = currentPerson.getDisplayName();
+                    String personPhotoUrl = currentPerson.getImage().getUrl();
+                    String personGooglePlusProfile = currentPerson.getUrl();
+                    String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                    Parse.enableLocalDatastore(getBaseContext());
+
+                    Parse.initialize(getBaseContext(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
+                    ParseObject parseObject = new ParseObject("UserDetails");
+                    parseObject.put("Email",email);
+
+                    while(!parseObject.saveInBackground().isCompleted()){
+
+                    }
+
+                    objectId = parseObject.getObjectId();
+                    System.out.println("987" + objectId);
+                    Log.e(TAG, "Name: " + personName + ", plusProfile: "
+                            + personGooglePlusProfile + ", email: " + email
+                            + ", Image: " + personPhotoUrl);
 
                 /*txtName.setText(personName);
 
                 txtEmail.setText(email);
 */
-                pref = getSharedPreferences("meeting_app",0);
-                edit = pref.edit();
-                edit.putString("objectId", objectId);
-                edit.putString("UserPhotoUrl",  personPhotoUrl);
-                edit.putString("UserEmail",      email);
-                edit.putString("UserName", personName);
-                edit.commit();
+                    pref = getSharedPreferences("meeting_app",0);
+                    edit = pref.edit();
+                    edit.putString("objectId", objectId);
+                    edit.putString("UserPhotoUrl",  personPhotoUrl);
+                    edit.putString("UserEmail",      email);
+                    edit.putString("UserName", personName);
+                    edit.commit();
 
 
 
-                // by default the profile url gives 50x50 px image only
-                // we can replace the value with whatever dimension we want by
-                // replacing sz=X
-                personPhotoUrl = personPhotoUrl.substring(0,
-                        personPhotoUrl.length() - 2)
-                        + PROFILE_PIC_SIZE;
+                    // by default the profile url gives 50x50 px image only
+                    // we can replace the value with whatever dimension we want by
+                    // replacing sz=X
+                    personPhotoUrl = personPhotoUrl.substring(0,
+                            personPhotoUrl.length() - 2)
+                            + PROFILE_PIC_SIZE;
 
-                new LoadProfileImage(imgProfilePic).execute(personPhotoUrl);
+                    new LoadProfileImage(imgProfilePic).execute(personPhotoUrl);
 
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Person information is null", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "Person information is null", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        }
+
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+
+
+            Intent intent =new Intent(getBaseContext(), RegistrationPage.class);
+            intent.putExtra("objectId",objectId);
+            startActivity(intent);
+
+
         }
     }
 
+
+
+
+    /**
+     * Fetching user's information name, email, profile pic
+     * */
 
     /**
      * Background Async task to load user profile picture from url
