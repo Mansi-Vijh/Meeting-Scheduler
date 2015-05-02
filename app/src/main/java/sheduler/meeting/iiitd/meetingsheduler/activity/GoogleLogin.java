@@ -26,10 +26,13 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.io.InputStream;
+import java.text.ParseException;
 
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
@@ -38,7 +41,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
 
     SharedPreferences pref;
     SharedPreferences.Editor edit;
-
+    boolean isRegistered = false;
 
     private static final int RC_SIGN_IN = 0;
     // Logcat tag
@@ -176,18 +179,37 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
                     String personName = currentPerson.getDisplayName();
                     String personPhotoUrl = currentPerson.getImage().getUrl();
                     String personGooglePlusProfile = currentPerson.getUrl();
-                    String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                    final String  email = Plus.AccountApi.getAccountName(mGoogleApiClient);
                     Parse.enableLocalDatastore(getBaseContext());
-
                     Parse.initialize(getBaseContext(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
-                    ParseObject parseObject = new ParseObject("UserDetails");
-                    parseObject.put("Email",email);
 
-                    while(!parseObject.saveInBackground().isCompleted()){
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("UserDetails");
+                    query.whereEqualTo("Email", email);
+                    query.getFirstInBackground(new GetCallback<ParseObject>() {
 
-                    }
+                        @Override
+                        public void done(ParseObject parseObject, com.parse.ParseException e) {
+                            if (parseObject == null) {
 
-                    objectId = parseObject.getObjectId();
+                                System.out.println("new object created");
+                                parseObject.put("Email",email);
+                                System.out.println("object exists. sent to Main");
+                                while(!parseObject.saveInBackground().isCompleted()){
+                                isRegistered = false;
+                                }
+                                objectId = parseObject.getObjectId();
+                            }
+                            else
+                            {
+                                isRegistered = true;
+                                objectId = parseObject.getObjectId();
+                            }
+                        }
+                    });
+
+
+
+
                     System.out.println("987" + objectId);
                     Log.e(TAG, "Name: " + personName + ", plusProfile: "
                             + personGooglePlusProfile + ", email: " + email
@@ -231,13 +253,18 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
+            Intent intent = null;
 
+            if(isRegistered == false) {
+                intent = new Intent(getBaseContext(), RegistrationPage.class);
 
-            Intent intent =new Intent(getBaseContext(), RegistrationPage.class);
-            intent.putExtra("objectId",objectId);
+            }
+            else if(isRegistered == true) {
+                intent = new Intent(getBaseContext(), MainActivity.class);
+
+            }
+            intent.putExtra("objectId", objectId);
             startActivity(intent);
-
-
         }
     }
 
