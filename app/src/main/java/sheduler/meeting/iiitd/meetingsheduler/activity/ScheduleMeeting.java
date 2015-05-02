@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -31,30 +33,31 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
     TextView profName, basicDetails;
     Button selectDate, proceed;
 
+    Spinner spinner;
     int mYear, mMonth, mDay;
     String date, profId;
 
+    ArrayList<Integer> Overall_slots = new ArrayList<Integer>();
+    ArrayAdapter<CharSequence> adapter;
+    ArrayList<String> string_slots= new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_a_meeting);
 
-
-
         Parse.initialize(getBaseContext(), "KaNybYEl3ipW0bdomrnWxcl98UGmFSxVrPEkFJE4", "bywJxTAclcQdSvQ0U7Vg1GU4ZpMlLIAcmPL0kMVs");
-
         Intent intent = getIntent();
         profId=intent.getStringExtra("professor_id");
-
-
         profName=(TextView) findViewById(R.id.schedule_a_meeting_name);
         basicDetails=(TextView) findViewById(R.id.schedule_a_meeting_details);
-
         selectDate=(Button) findViewById(R.id.schedule_a_meeting_date_picker);
         proceed=(Button) findViewById(R.id.schedule_a_meeting_proceed);
+        spinner=(Spinner) findViewById(R.id.schedule_a_meeting_slot);
         selectDate.setOnClickListener(this);
         proceed.setOnClickListener(this);
+
+
 
     }
 
@@ -130,9 +133,9 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                     public void done(List<ParseObject> parseObjects, ParseException e) {
                         if (e == null) {
                             ArrayList<Integer> slots_notAvailable = new ArrayList<Integer>();
-                            ArrayList<Integer> Overall_slots = new ArrayList<Integer>();
-                            for(int i = 0 ; i< parseObjects.size();i++)
-                            slots_notAvailable.add( parseObjects.get(i).getDate("Date").getHours());
+
+                            for (int i = 0; i < parseObjects.size(); i++)
+                                slots_notAvailable.add(parseObjects.get(i).getDate("Date").getHours());
                             Overall_slots.add(8);
                             Overall_slots.add(9);
                             Overall_slots.add(10);
@@ -143,8 +146,7 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                             Overall_slots.add(3);
                             Overall_slots.add(4);
                             Overall_slots.add(5);
-                            for (int j = 0 ; j < slots_notAvailable.size();j++)
-                            {
+                            for (int j = 0; j < slots_notAvailable.size(); j++) {
                                 Overall_slots.contains(slots_notAvailable.get(j));
                                 Overall_slots.remove(Overall_slots.indexOf(slots_notAvailable.get(j)));
                             }
@@ -160,9 +162,13 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                             date_new.setHours(new_slot);
                             parseObject.put("Title", "my new title");
                             parseObject.put("Date", date_new);
-                            parseObject.saveInBackground();
+                            while (!parseObject.saveInBackground().isCompleted()) {
 
-
+                            }
+                           /*  adapter = ArrayAdapter.createFromResource(getBaseContext(), string_slots, android.R.layout.simple_spinner_item);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinner.setAdapter(adapter);
+*/
 
                             Log.d("Slots", "Retrieved " + parseObjects.size() + " objects");
                         } else {
