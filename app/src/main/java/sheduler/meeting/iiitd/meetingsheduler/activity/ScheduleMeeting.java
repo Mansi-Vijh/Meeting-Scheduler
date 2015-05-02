@@ -21,13 +21,19 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
     Button selectDate, proceed;
 
     int mYear, mMonth, mDay;
-    String date;
+    String date, proffId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_a_meeting);
+
+
+
+        Intent intent = getIntent();
+        proffId=intent.getStringExtra("proffessor_id");
+
 
         profName=(TextView) findViewById(R.id.schedule_a_meeting_name);
         basicDetails=(TextView) findViewById(R.id.schedule_a_meeting_details);
@@ -69,6 +75,7 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
             case R.id.schedule_a_meeting_proceed:
 
                 Intent intent =new Intent( ScheduleMeeting.this,MeetingForm.class );
+                intent.putExtra("proffessor_id",proffId);
                 startActivity(intent);
 
                 break;

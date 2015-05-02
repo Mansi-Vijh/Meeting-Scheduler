@@ -73,7 +73,7 @@ public class MeetingForm extends ActionBarActivity implements View.OnClickListen
     public void onClick(View v) {
 
         Intent intent = getIntent();
-        intent.getStringExtra("proffessor_id");
+        String proffessorId=intent.getStringExtra("proffessor_id");
 
 
       pref = getSharedPreferences("meeting_app",0);
@@ -85,13 +85,15 @@ public class MeetingForm extends ActionBarActivity implements View.OnClickListen
 
        ParseObject meetingdetails = new ParseObject("MeetingDetails");
         meetingdetails.put("FromID", userId);
-        meetingdetails.put("ToID", intent);
+        meetingdetails.put("ToID", proffessorId);
         meetingdetails.put("Title", titleText);
         meetingdetails.put("Description", descriptionText);
         meetingdetails.put("Details", detailsText);
         meetingdetails.put("AttachmentLink",attachmentLinkText);
 
-        meetingdetails.saveInBackground();
+       while(!meetingdetails.saveInBackground().isCompleted()){
+
+       }
 
 
          intent =new Intent(MeetingForm.this, MainActivity.class );

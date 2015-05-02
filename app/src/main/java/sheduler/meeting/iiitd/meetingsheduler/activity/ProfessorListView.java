@@ -116,7 +116,8 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
         System.out.println("678 "+ parseObjectList.size());
         for(int i = 0; i < parseObjectList.size();i++ )
         {
-                professorDetails.add(new ProfessorDetails(parseObjectList.get(i).getString("Name"), parseObjectList.get(i).getString("Post"), parseObjectList.get(i).getString("Courses")));
+
+                professorDetails.add(new ProfessorDetails(parseObjectList.get(i).getString("Name"), parseObjectList.get(i).getString("Post"),parseObjectList.get(i).getString("Courses"), parseObjectList.get(i).getObjectId() ));
 
                 System.out.println("678 " + parseObjectList.get(i).getString("Name") + parseObjectList.get(i).getString("Post") + parseObjectList.get(i).getString("Courses"));
 
@@ -136,11 +137,13 @@ public class ProfessorListView extends Fragment implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
+        proffId=professorDetails.get(position).getObjectId();
+        System.out.println("check 476 "+ proffId);
         Intent intent =new Intent(getActivity() , ScheduleMeeting.class);
+
         intent.putExtra("proffessor_id",proffId);
 
-        Intent intent1 =new Intent(getActivity() , MeetingForm.class);
-        intent1.putExtra("proffessor_id",proffId);
+
 
         startActivity(intent);
 

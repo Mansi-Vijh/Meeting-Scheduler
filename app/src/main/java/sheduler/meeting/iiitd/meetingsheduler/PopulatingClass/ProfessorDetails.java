@@ -10,6 +10,16 @@ public class ProfessorDetails {
     private String time;
     private String date;
 
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
+
+    private String objectId;
+
     public String getPost() {
         return post;
     }
@@ -24,7 +34,8 @@ public class ProfessorDetails {
         return course;
     }
 
-    public ProfessorDetails(String profName, String post, String course) {
+    public ProfessorDetails(String profName, String post, String course, String objectId) {
+        this.objectId=objectId;
         this.profName = profName;
         this.course = course;
         this.post=post;
