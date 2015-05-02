@@ -116,7 +116,7 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                             }
                         }, mYear, mMonth, mDay);
                 dpd.show();
-                System.out.println("*****" + date);
+
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
 
                 query.getInBackground("GehHfr9xGC", new GetCallback<ParseObject>() {
@@ -126,8 +126,11 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                     public void done(ParseObject parseObject, com.parse.ParseException e) {
 
                         Date date_new = parseObject.getDate("Date");
-                        System.out.println("12345 Date" + date_new.getHours() + date_new.getMinutes() + date_new.getDate() );
-
+                        System.out.println("Date Checking : " + date_new.toString());
+                        date_new.setHours(8);
+                        parseObject.put("Title", "my new title");
+                        parseObject.put("Date", date_new);
+                        parseObject.saveInBackground();
                     } });
                 break;
 
