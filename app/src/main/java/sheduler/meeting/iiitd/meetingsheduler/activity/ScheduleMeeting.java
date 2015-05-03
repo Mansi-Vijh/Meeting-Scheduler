@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -38,8 +40,10 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
     String date, profId;
 
     ArrayList<Integer> Overall_slots = new ArrayList<Integer>();
-    ArrayAdapter<CharSequence> adapter;
+    ArrayAdapter<String> adapter;
     ArrayList<String> string_slots= new ArrayList<String>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,11 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
         spinner=(Spinner) findViewById(R.id.schedule_a_meeting_slot);
         selectDate.setOnClickListener(this);
         proceed.setOnClickListener(this);
+
+        adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, string_slots);
+        spinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
 
 
@@ -121,6 +130,10 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                                 System.out.println(date);
 
 
+                                //ArrayAdapter&lt;String&gt; dataAdapter = new ArrayAdapter&lt;String&gt;(this, categories);
+
+
+
                             }
                         }, mYear, mMonth, mDay);
                 dpd.show();
@@ -151,6 +164,12 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                                 Overall_slots.remove(Overall_slots.indexOf(slots_notAvailable.get(j)));
                             }
 
+
+                            for (int i = 0; i < Overall_slots.size(); i++) {
+                                string_slots.add(Overall_slots.toString());
+                            }
+adapter.notifyDataSetChanged();
+                            spinner.getSelectedItem();
                             // populate spinner using the values in Overall_slots
                             //get the selected value and save it in the variable : new_slot
                             int new_slot = 8;
@@ -165,10 +184,9 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                             while (!parseObject.saveInBackground().isCompleted()) {
 
                             }
-                           /*  adapter = ArrayAdapter.createFromResource(getBaseContext(), string_slots, android.R.layout.simple_spinner_item);
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spinner.setAdapter(adapter);
-*/
+
+
+
 
                             Log.d("Slots", "Retrieved " + parseObjects.size() + " objects");
                         } else {
@@ -190,6 +208,19 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
         }
 
 
+
+    public class CustomOnItemSelectedListener implements OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+
     }
 
 
+}
