@@ -75,7 +75,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
                     Date date = parseObjects.get(i).getDate("Date");
 
                     ParseQuery<ParseObject> queryInner = ParseQuery.getQuery("UserDetails");
-                    query.getInBackground(parseObjects.get(i).getString("toID"), new GetCallback<ParseObject>() {
+                    queryInner.getInBackground(parseObjects.get(i).getString("toID"), new GetCallback<ParseObject>() {
 
 
                         @Override
@@ -111,7 +111,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
                     Date date = parseObjects.get(i).getDate("Date");
 
                     ParseQuery<ParseObject> queryInner = ParseQuery.getQuery("UserDetails");
-                    query.getInBackground(parseObjects.get(i).getString("fromID"), new GetCallback<ParseObject>() {
+                    queryInner.getInBackground(parseObjects.get(i).getString("fromID"), new GetCallback<ParseObject>() {
 
 
                         @Override
