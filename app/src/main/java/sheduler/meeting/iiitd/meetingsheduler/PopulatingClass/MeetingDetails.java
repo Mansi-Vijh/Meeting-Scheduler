@@ -5,14 +5,42 @@ package sheduler.meeting.iiitd.meetingsheduler.PopulatingClass;
  */
 public class MeetingDetails {
 
-   private String name;
+    private String title;
+    private String status;
 
-    public MeetingDetails(String name, String title, String hr, String day, String month) {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    private int hr;
+    private int date;
+    private int month;
+
+    private String meetingId;
+    private String name;
+
+
+
+    public String getMeetingId() {
+        return meetingId;
+    }
+
+    public void setMeetingId(String meetingId) {
+        this.meetingId = meetingId;
+    }
+
+    public MeetingDetails(String name, String title, int hr, int date, int month, String meetingId, String status) {
         this.name = name;
+        this.meetingId=meetingId;
         this.title = title;
         this.hr = hr;
-        this.day = day;
+        this.date = date;
         this.month = month;
+        this.status=status;
     }
 
     public String getTitle() {
@@ -31,35 +59,30 @@ public class MeetingDetails {
         this.name = name;
     }
 
-    public String getHr() {
+    public int getHr() {
         return hr;
     }
 
-    public void setHr(String hr) {
+    public void setHr(int hr) {
         this.hr = hr;
     }
 
-    public String getDay() {
-        return day;
+    public int getDate() {
+        return date;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public void setDate(int day) {
+        this.date = day;
     }
 
-    public String getMonth() {
+    public int getMonth() {
         return month;
     }
 
-    public void setMonth(String month) {
+    public void setMonth(int month) {
         this.month = month;
     }
 
-    private String title;
-
-    private String hr;
-    private String day;
-    private String month;
 
 
 }

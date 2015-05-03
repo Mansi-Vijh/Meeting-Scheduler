@@ -13,13 +13,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import sheduler.meeting.iiitd.meetingsheduler.PopulatingClass.MeetingDetails;
 import sheduler.meeting.iiitd.meetingsheduler.R;
 import sheduler.meeting.iiitd.meetingsheduler.Adapters.ProfListViewRowAdapter;
 import sheduler.meeting.iiitd.meetingsheduler.PopulatingClass.ProfessorDetails;
@@ -27,7 +31,10 @@ import sheduler.meeting.iiitd.meetingsheduler.PopulatingClass.ProfessorDetails;
 public class HistoryFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     SharedPreferences pref;
-    ArrayList<ProfessorDetails> profPopulate = new ArrayList<ProfessorDetails>();
+    ArrayList<MeetingDetails> meetingPopulate = new ArrayList<MeetingDetails>();
+    String name;
+    String title;
+    String other;
 
     ProfListViewRowAdapter adapter;
 
@@ -53,37 +60,71 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
 
     public void populateData() {
         pref = getActivity().getSharedPreferences("meeting_app",0);
-        String userId = pref.getString("objectId","");
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
+        final String userId = pref.getString("objectId","");
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
 
         query.whereEqualTo("fromID", userId);
         query.findInBackground(new FindCallback<ParseObject>() {
-
             @Override
             public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+
+
                 for(int i = 0 ; i < parseObjects.size(); i++)
                 {
+                    title = parseObjects.get(i).getString("Title");
+                    Date date = parseObjects.get(i).getDate("Date");
 
+                    ParseQuery<ParseObject> queryInner = ParseQuery.getQuery("UserDetails");
+                    query.getInBackground(parseObjects.get(i).getString("toID"), new GetCallback<ParseObject>() {
+
+
+                        @Override
+                        public void done(ParseObject parseObject, com.parse.ParseException e) {
+                            name = parseObject.getString("Name");
+                        }
+                    });
+                    Calendar c = Calendar.getInstance();
+                    int now = Calendar.DATE;
+                    if(parseObjects.get(i).getString("Status") == "Approved"  && date.getDate()<now)
+                    meetingPopulate.add(new MeetingDetails(name,title,date.getHours(),date.getDate(),date.getMonth(),parseObjects.get(i).getObjectId(),parseObjects.get(i).getString("Status")));
+                    else
+                        System.out.println("No meetings to show");
                 }
-               // profPopulate.add(new ProfessorDetails(name, parseObjects.get(i)., "2:00 pm", "25", "April","Approved"));
+
+
 
             }
         });
+
+
 
         query.whereEqualTo("toID", userId);
         query.findInBackground(new FindCallback<ParseObject>() {
 
             @Override
             public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
-                String name;
-                String title;
-                String other;
+
 
                 for(int i = 0 ; i < parseObjects.size(); i++)
                 {
-              //      profPopulate.add()
+                    title = parseObjects.get(i).getString("Title");
+                    Date date = parseObjects.get(i).getDate("Date");
+
+                    ParseQuery<ParseObject> queryInner = ParseQuery.getQuery("UserDetails");
+                    query.getInBackground(parseObjects.get(i).getString("fromID"), new GetCallback<ParseObject>() {
+
+
+                        @Override
+                        public void done(ParseObject parseObject, com.parse.ParseException e) {
+                             name = parseObject.getString("Name");
+                        }
+                    });
+                    Calendar c = Calendar.getInstance();
+                    int now = Calendar.DATE;
+                if(parseObjects.get(i).getString("Status") == "Approved" && date.getDate()<now )
+                meetingPopulate.add(new MeetingDetails(name,title,date.getHours(),date.getDate(),date.getMonth(),parseObjects.get(i).getObjectId(),parseObjects.get(i).getString("Status")));
+                System.out.println("No meetings to show");
                 }
-                // profPopulate.add(new ProfessorDetails(name, parseObjects.get(i)., "2:00 pm", "25", "April","Approved"));
 
             }
         });
@@ -98,7 +139,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
         if(flag==0) {
             profListView = (ListView) getView().findViewById(R.id.prof_list_view_lv);
             populateData();
-            adapter = new ProfListViewRowAdapter(profPopulate, getActivity());
+            adapter = new ProfListViewRowAdapter(meetingPopulate, getActivity());
             profListView.setAdapter(adapter);
             profListView.setOnItemClickListener(this);
             flag = 1;
@@ -120,9 +161,9 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-        String name = "YAYYY!";
-        String meetingId=profPopulate.get(position).getMeetingId();
-        String status=profPopulate.get(position).getStatus();
+        String name = meetingPopulate.get(position).getName();
+        String meetingId=meetingPopulate.get(position).getMeetingId();
+        String status=meetingPopulate.get(position).getStatus();
         Intent intent=new Intent(getActivity(), MeetingDetailsActivity.class);
         intent.putExtra("meeting_id",meetingId);
         intent.putExtra("status",status);
