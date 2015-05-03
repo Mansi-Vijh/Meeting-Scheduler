@@ -69,8 +69,7 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
             public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
 
 
-                for(int i = 0 ; i < parseObjects.size(); i++)
-                {
+                for (int i = 0; i < parseObjects.size(); i++) {
                     title = parseObjects.get(i).getString("Title");
                     Date date = parseObjects.get(i).getDate("Date");
 
@@ -85,21 +84,19 @@ public class HistoryFragment extends Fragment implements AdapterView.OnItemClick
                     });
                     Calendar c = Calendar.getInstance();
                     int now = Calendar.DATE;
-                    if(parseObjects.get(i).getString("Status") == "Approved"  && date.getDate()<now)
-                    meetingPopulate.add(new MeetingDetails(name,title,date.getHours(),date.getDate(),date.getMonth(),parseObjects.get(i).getObjectId(),parseObjects.get(i).getString("Status")));
+                    if (parseObjects.get(i).getString("Status") == "Approved" && date.getDate() < now)
+                        meetingPopulate.add(new MeetingDetails(name, title, date.getHours(), date.getDate(), date.getMonth(), parseObjects.get(i).getObjectId(), parseObjects.get(i).getString("Status")));
                     else
                         System.out.println("No meetings to show");
                 }
 
 
-
             }
         });
 
-
-
-        query.whereEqualTo("toID", userId);
-        query.findInBackground(new FindCallback<ParseObject>() {
+        ParseQuery<ParseObject> query2 = ParseQuery.getQuery("MeetingDetails");
+        query2.whereEqualTo("toID", userId);
+        query2.findInBackground(new FindCallback<ParseObject>() {
 
             @Override
             public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {

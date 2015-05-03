@@ -3,6 +3,7 @@ package sheduler.meeting.iiitd.meetingsheduler.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,8 +35,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     ArrayList<MeetingDetails> meetingPopulate = new ArrayList<MeetingDetails>();
     String name;
     String title;
-    String other;
-
+   // String other;
+    String userId;
     ProfListViewRowAdapter adapter;
 
     ListView profListView;
@@ -55,78 +56,20 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     public void populateData() {
-        pref = getActivity().getSharedPreferences("meeting_app",0);
-        final String userId = pref.getString("objectId","");
-        final ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
-
-        query.whereEqualTo("fromID", userId);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+        pref = getActivity().getSharedPreferences("meeting_app", 0);
+         userId = pref.getString("objectId", "");
 
 
-                for(int i = 0 ; i < parseObjects.size(); i++)
-                {
-                    title = parseObjects.get(i).getString("Title");
-                    Date date = parseObjects.get(i).getDate("Date");
-
-                    ParseQuery<ParseObject> queryInner = ParseQuery.getQuery("UserDetails");
-                    queryInner.getInBackground(parseObjects.get(i).getString("toID"), new GetCallback<ParseObject>() {
-
-
-                        @Override
-                        public void done(ParseObject parseObject, com.parse.ParseException e) {
-                            name = parseObject.getString("Name");
-                        }
-                    });
-                   Calendar c = Calendar.getInstance();
-                    int now = Calendar.DATE;
-
-                        meetingPopulate.add(new MeetingDetails(name,title,date.getHours(),date.getDate(),date.getMonth(),parseObjects.get(i).getObjectId(),parseObjects.get(i).getString("Status")));
-
-                }
+        AsyncCalling calling=new AsyncCalling();
+        calling.execute();
 
 
 
-            }
-        });
 
-
-
-        query.whereEqualTo("toID", userId);
-        query.findInBackground(new FindCallback<ParseObject>() {
-
-            @Override
-            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
-
-
-                for(int i = 0 ; i < parseObjects.size(); i++)
-                {
-                    title = parseObjects.get(i).getString("Title");
-                    Date date = parseObjects.get(i).getDate("Date");
-
-                    ParseQuery<ParseObject> queryInner = ParseQuery.getQuery("UserDetails");
-                    queryInner.getInBackground(parseObjects.get(i).getString("fromID"), new GetCallback<ParseObject>() {
-
-
-                        @Override
-                        public void done(ParseObject parseObject, com.parse.ParseException e) {
-                            name = parseObject.getString("Name");
-                        }
-                    });
-                    Calendar c = Calendar.getInstance();
-                    int now = Calendar.DATE;
-
-                        meetingPopulate.add(new MeetingDetails(name,title,date.getHours(),date.getDate(),date.getMonth(),parseObjects.get(i).getObjectId(),parseObjects.get(i).getString("Status")));
-
-                }
-
-            }
-        });
 
     }
 
@@ -137,10 +80,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
         if(flag==0) {
             profListView = (ListView) getView().findViewById(R.id.prof_list_view_lv);
-            populateData();
+
             adapter = new ProfListViewRowAdapter(meetingPopulate, getActivity());
             profListView.setAdapter(adapter);
             profListView.setOnItemClickListener(this);
+            populateData();
             flag = 1;
         }
     }
@@ -169,4 +113,117 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         intent.putExtra("name",name);
         startActivity(intent);
     }
+
+
+
+
+
+    public class AsyncCalling extends AsyncTask<String, String , String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                updateStatus();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        private void updateStatus() throws InterruptedException {
+
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
+
+            query.whereEqualTo("fromID", userId);
+            query.wait(5000);
+
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+
+
+                    for (int i = 0; i < parseObjects.size(); i++) {
+                        title = parseObjects.get(i).getString("Title");
+                        Date date = parseObjects.get(i).getDate("Date");
+
+                        ParseQuery<ParseObject> queryInner = ParseQuery.getQuery("UserDetails");
+                        queryInner.getInBackground(parseObjects.get(i).getString("toID"), new GetCallback<ParseObject>() {
+
+
+                            @Override
+                            public void done(ParseObject parseObject, com.parse.ParseException e) {
+                                name = parseObject.getString("Name");
+
+                            }
+                        });
+                        Calendar c = Calendar.getInstance();
+                        int now = Calendar.DATE;
+
+                        meetingPopulate.add(new MeetingDetails(name, title, date.getHours(), date.getDate(), date.getMonth(), parseObjects.get(i).getObjectId(), parseObjects.get(i).getString("Status")));
+                        System.out.println("598" + name + title + date.getHours() + date.getDate() + date.getMonth() + parseObjects.get(i).getObjectId() + parseObjects.get(i).getString("Status"));
+                    }
+
+
+                }
+            });
+
+
+            ParseQuery<ParseObject> query1 = ParseQuery.getQuery("MeetingDetails");
+
+            query1.whereEqualTo("toID", userId);
+
+            query1.findInBackground(new FindCallback<ParseObject>() {
+
+                @Override
+                public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+
+
+                    for(int i = 0 ; i < parseObjects.size(); i++)
+                    {
+                        title = parseObjects.get(i).getString("Title");
+                        Date date = parseObjects.get(i).getDate("Date");
+
+                        ParseQuery<ParseObject> queryInner = ParseQuery.getQuery("UserDetails");
+                        queryInner.getInBackground(parseObjects.get(i).getString("fromID"), new GetCallback<ParseObject>() {
+
+
+                            @Override
+                            public void done(ParseObject parseObject, com.parse.ParseException e) {
+                                name = parseObject.getString("Name");
+                                System.out.println("1234 Name"+name);
+                            }
+                        });
+                        Calendar c = Calendar.getInstance();
+                        int now = Calendar.DATE;
+
+                        meetingPopulate.add(new MeetingDetails(name, title, date.getHours(), date.getDate(), date.getMonth(), parseObjects.get(i).getObjectId(), parseObjects.get(i).getString("Status")));
+                        System.out.println("598" + name + title + date.getHours() + date.getDate() + date.getMonth() + parseObjects.get(i).getObjectId() + parseObjects.get(i).getString("Status"));
+                    }
+
+
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
+
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            adapter.notifyDataSetChanged();
+
+        }
+    }
+
+
+
+
 }

@@ -34,6 +34,8 @@ import com.parse.ParseQuery;
 import java.io.InputStream;
 import java.text.ParseException;
 
+import sheduler.meeting.iiitd.meetingsheduler.PopulatingClass.Professor;
+import sheduler.meeting.iiitd.meetingsheduler.PopulatingClass.Student;
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
 public class GoogleLogin extends ActionBarActivity implements View.OnClickListener,
@@ -210,6 +212,32 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
                         edit.putString("programme",programme);
 
                         edit.commit();
+
+
+                        if(type=="Student"){
+
+                            Student student=Student.getInstance();
+                            student.setName(name);
+                            student.setType(type);
+                            student.setCourses(courses);
+                            student.setStream(stream);
+                            student.setYear(year);
+                            student.setProgram(programme);
+                            student.setId(objectId);
+                            student.setEmail(email);
+
+                        }
+                        else{
+                            Professor professor= Professor.getInstance();
+                            professor.setId(objectId);
+                            professor.setEmail(email);
+                            professor.setPost(post);
+                            professor.setCourses(courses);
+                            professor.setName(name);
+                            professor.setType(type);
+
+
+                        }
 
                     }
 

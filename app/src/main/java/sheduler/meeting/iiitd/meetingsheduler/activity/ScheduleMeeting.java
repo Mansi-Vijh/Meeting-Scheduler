@@ -62,7 +62,7 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
         proceed.setOnClickListener(this);
 
         adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, string_slots);
-        spinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+    //    spinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
