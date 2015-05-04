@@ -4,19 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import sheduler.meeting.iiitd.meetingsheduler.Adapters.ProfListViewRowAdapter;
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
 public class SettingsFragment extends Fragment {
@@ -65,7 +60,6 @@ public class SettingsFragment extends Fragment {
                                     int position, long id) {
 
                 // ListView Clicked item index
-                int itemPosition     = position;
 
                 // ListView Clicked item value
                 String  itemValue    = (String) listView.getItemAtPosition(position);

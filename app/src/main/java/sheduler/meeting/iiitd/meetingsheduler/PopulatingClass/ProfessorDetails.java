@@ -52,8 +52,8 @@ public class ProfessorDetails {
         this.about = about;
         this.time = time;
         this.date = date;
-        //this.meetingId = meetingId;
-        this.meetingId = "123";
+        this.meetingId = meetingId;
+//        this.meetingId = "123";
         this.status = status;
         this.month = month;
     }

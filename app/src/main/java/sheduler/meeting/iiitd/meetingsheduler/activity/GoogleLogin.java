@@ -32,7 +32,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.io.InputStream;
-import java.text.ParseException;
 
 import sheduler.meeting.iiitd.meetingsheduler.R;
 
@@ -66,8 +65,7 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
 
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
-    private ImageView imgProfilePic;
-    private TextView txtName, txtEmail;
+    private TextView txtEmail;
     private LinearLayout llProfileLayout;
 
     String name = "", courses= "", type ="", stream ="", year = "", programme = "",post = "";
@@ -83,8 +81,8 @@ public class GoogleLogin extends ActionBarActivity implements View.OnClickListen
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
         btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
-        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-        txtName = (TextView) findViewById(R.id.txtName);
+        ImageView imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
+        TextView txtName = (TextView) findViewById(R.id.txtName);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
 

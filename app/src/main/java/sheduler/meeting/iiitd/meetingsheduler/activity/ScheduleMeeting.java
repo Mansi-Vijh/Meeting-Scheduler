@@ -116,11 +116,8 @@ public class ScheduleMeeting extends ActionBarActivity implements View.OnClickLi
                             }
                         }, mYear, mMonth, mDay);
                 dpd.show();
-<<<<<<< HEAD
 
-=======
                 //System.out.println("*****" + date);
->>>>>>> origin/master
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("MeetingDetails");
 
                 query.getInBackground("GehHfr9xGC", new GetCallback<ParseObject>() {

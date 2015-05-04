@@ -1,7 +1,5 @@
 package sheduler.meeting.iiitd.meetingsheduler.PopulatingClass;
 
-import java.util.ArrayList;
-
 /**
  * Created by Masood on 5/2/2015.
  */

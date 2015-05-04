@@ -1,9 +1,5 @@
 package sheduler.meeting.iiitd.meetingsheduler.PopulatingClass;
 
-import android.graphics.drawable.shapes.Shape;
-
-import com.google.android.gms.maps.model.Circle;
-
 /**
  * Created by Masood on 5/2/2015.
  */

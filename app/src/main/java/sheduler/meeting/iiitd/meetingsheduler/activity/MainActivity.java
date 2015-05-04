@@ -2,7 +2,6 @@ package sheduler.meeting.iiitd.meetingsheduler.activity;
 
 import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.ActionBarDrawerToggle;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -174,8 +173,7 @@ public class MainActivity extends FragmentActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.fragment_main, container, false);
         }
 
         @Override
